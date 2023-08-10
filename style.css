@@ -1,0 +1,81 @@
+/* Apply the background color to the body element */
+body {
+    background-color: #1c1f24; /* Dark blue-grey background */
+    margin: 0; /* Remove default margin for the body */
+    font-family: Helvetica, Arial, sans-serif; /* Use Helvetica for typeset */
+    color: white; /* Set text color to white */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Style the header, main, and footer sections */
+  header {
+    padding: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+    
+    z-index: 1; /* Place the header on top */
+  }
+  
+  main {
+    flex: 1; /* Allow the main section to grow and fill remaining space */
+  }
+  
+  footer {
+    padding: 20px;
+    text-align: center;
+    
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1; /* Place the footer on top */
+  }
+  
+  /* Style the toolbar and grid elements */
+  #toolbar {
+    text-align: right;
+    padding: 10px;
+    border-radius: 16px;
+    margin: 5px;
+    z-index: 2; /* Place the toolbar above the grid */
+  }
+  
+  #grid-container {
+    background-color: #1c1f24; /* Dark blue-grey background */
+    padding: 10px;
+    border-radius: 16px;
+    margin: 5px;
+    z-index: 1; /* Place the grid below the toolbar */
+  }
+  
+  /* New styles for the grid squares */
+  .grid-square {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    border-radius: 4px;
+  }
+  
+  /* New styles for the name within the grid square */
+  .grid-name {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    color: white;
+  }
+  
+  #grid-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ensure the container covers the full viewport height */
+    position: relative; /* Make the container a stacking context */
+    z-index: 0; /* Place the grid behind other elements */
+  }
+  
