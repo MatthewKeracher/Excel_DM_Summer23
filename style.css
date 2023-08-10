@@ -1,81 +1,132 @@
-/* Apply the background color to the body element */
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set the background color and font */
 body {
-    background-color: #1c1f24; /* Dark blue-grey background */
-    margin: 0; /* Remove default margin for the body */
-    font-family: Helvetica, Arial, sans-serif; /* Use Helvetica for typeset */
-    color: white; /* Set text color to white */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+  background-color: #1c1f24;
+  font-family: Helvetica, Arial, sans-serif;
+  color: white;
+}
+
+/* Center header text and add some space */
+header {
+  text-align: left;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+}
+
+/* Add space to footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+/* Center toolbar buttons */
+.toolbar-container {
+  text-align: left;
+  padding: 10px;
+  margin: 5px;
+  position: relative;
+  z-index: 10;
+}
+
+.button {
+  font-size: 20px;
+  padding: 10px 20px;
+  /* Add more styling if needed */
+}
+
+/* Center canvas */
+.canvas-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  position: relative;
+  z-index: 0;
+}
+
+/* Set canvas size */
+.canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+/* Add pink outline to gridCanvas */
+#gridCanvas {
   
-  /* Style the header, main, and footer sections */
-  header {
-    padding: 40px;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: left;
-    
-    z-index: 1; /* Place the header on top */
-  }
+  opacity: 0.7;
+}
+
+/* Add white outline to paintCanvas */
+#paintCanvas {
   
-  main {
-    flex: 1; /* Allow the main section to grow and fill remaining space */
-  }
-  
-  footer {
-    padding: 20px;
-    text-align: center;
-    
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 1; /* Place the footer on top */
-  }
-  
-  /* Style the toolbar and grid elements */
-  #toolbar {
-    text-align: right;
-    padding: 10px;
-    border-radius: 16px;
-    margin: 5px;
-    z-index: 2; /* Place the toolbar above the grid */
-  }
-  
-  #grid-container {
-    background-color: #1c1f24; /* Dark blue-grey background */
-    padding: 10px;
-    border-radius: 16px;
-    margin: 5px;
-    z-index: 1; /* Place the grid below the toolbar */
-  }
-  
-  /* New styles for the grid squares */
-  .grid-square {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #000;
-    border-radius: 4px;
-  }
-  
-  /* New styles for the name within the grid square */
-  .grid-name {
-    font-size: 12px;
-    margin: 0;
-    padding: 0;
-    color: white;
-  }
-  
-  #grid-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; /* Ensure the container covers the full viewport height */
-    position: relative; /* Make the container a stacking context */
-    z-index: 0; /* Place the grid behind other elements */
-  }
-  
+  opacity: 1;
+}
+
+/* Style for the sidebar */
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden; /* Prevent sidebar content from overflowing */
+}
+
+.sidebar {
+  flex: 0 0 300px; /* Sidebar width */
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.3);
+  z-index: 2; /* Place sidebar above other elements */
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #2c2f34;
+}
+
+/* Form styling */
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: teal;
+}

@@ -1,31 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    
+    <link rel="stylesheet" href="style.css">
+    <title>Your Project</title>
 </head>
-
 <body>
     <header>
-        <h1 id="projectTitle">Untitled</h1> <!-- Use an ID to update the title -->
-        <link rel="stylesheet" href="style.css">
+        <div class="title-container">
+            <h1 id="projectTitle">Untitled</h1>
+            <div id="toolbar">
+                <button class = button id="newButton">New</button>
+                <button class = button id="saveButton">Save</button>
+                <button class = button id="loadButton">Load</button>
+            </div>
+        </div>
     </header>
     <main>
-        <div id="toolbar">
-            <button id="newButton">New</button>
-            <button id="saveButton">Save</button>
-            <button id="loadButton">Load</button>
+        <div class="container">
+            <div class="sidebar">
+                <aside id="sidebar"></aside>
+                <div>
+                    <form id="edit-form" style="display: none;">
+                        
+                        <input id="form-x" name="x" type="hidden" value="0">                       
+                     
+                        <input id="form-y" name="y" type="hidden" value="0">
+                        
+                        <label for="name">Name:</label>                        
+                        <input id="form-name" name="name" type="text" value="TEST">
+                        
+                        <label for="fill">Fill:</label>
+                        <input id="form-fill" name="fill" type="text" value="black">
+
+                        <button type="submit">Save</button>
+
+                    </form>
+                </div>
+                <!--The fo rm fields are made dynamically in Sidebar.js-->
+            </div>
+            <div class="main-content">
+                <div class="canvas-container">
+                    <canvas id="gridCanvas" class="canvas"></canvas>
+                    <canvas id="paintCanvas" class="canvas"></canvas>
+                </div>
+            </div>
         </div>
-        <canvas id="gridCanvas" ></canvas>
     </main>
     <footer>
         <p>&copy; 2023 Your Name</p>
     </footer>
     <script type="module" src="Grid.js"></script>
     <script type="module" src="Toolbar.js"></script>
-    <script type="module" src="Data.js"></script>
+    <script type="module" src="State.js"></script>
+    <script type="module" src="Paint.js"></script>
+   
+    
+   
 </body>
 </html>

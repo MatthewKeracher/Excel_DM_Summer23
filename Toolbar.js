@@ -1,5 +1,10 @@
-import Data from './Data.js';
+
+
 import Grid from './Grid.js';
+import Paint from './Paint.js';
+import State from './State.js';
+//import Sidebar from './Sidebar.js'; 
+
 
 class Toolbar {
   constructor() {
@@ -15,24 +20,31 @@ class Toolbar {
   
     const loadButton = document.getElementById('loadButton');
     loadButton.addEventListener('click', this.handleLoadButtonClick);
-  }
-
-  handleNewButtonClick() {
-    const gridSize = parseInt(prompt("Enter the grid size:"));
-
-    if (!isNaN(gridSize) && gridSize > 0) {
-      const numEntries = gridSize * gridSize; // Calculate total entries based on grid size
-      const newData = Data.generateJSONData(numEntries, gridSize);
-      Grid.init(newData);
-    } else {
-      alert("Invalid input. Please enter a valid grid size.");
+    
+    State.init(); // Start listening for JSON data changes. 
+    //Sidebar.init();
     }
-  }
+
+    handleNewButtonClick() {
+      const gridSize = 10 // parseInt(prompt("Enter the grid size:", "10")); // Set default value to 10
+    
+      if (!isNaN(gridSize) && gridSize > 0) {
+        const numEntries = gridSize //* gridSize; // Calculate total entries based on grid size
+        const newData = State.generateJSONData(numEntries, gridSize);
+        Grid.init(newData);
+        const projectTitle = document.getElementById('projectTitle');
+        projectTitle.textContent = 'Untitled';
+      } else {
+        alert("Invalid input. Please enter a valid grid size.");
+      }
+    }
+    
+    
 
   handleSaveButtonClick() {
     const currentData = Grid.getCurrentData();
     if (currentData) {
-      Data.exportJSONData(currentData);
+      State.exportJSONData(currentData);
     } else {
       alert("No data to export.");
     }
@@ -72,8 +84,10 @@ class Toolbar {
       }
       reader.readAsText(file);
     }
-  }}
-  
+  }
+
+  };
+
 
 const toolbar = new Toolbar();
 toolbar.init(); // Initialize the toolbar

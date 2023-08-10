@@ -1,87 +1,125 @@
+import Paint from './Paint.js';
+
 const Grid = {
-    squareSize: 50, // Initial square size
-    canvas: null,
-  
-    init(data) {
-      this.data = data;
-      this.canvas = document.getElementById('gridCanvas');
-  
-      if (this.canvas) {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+  squareSize: 75, // Initial square size
+  canvas: null,
 
-        // Set the canvas context globalAlpha for transparency
-        //this.ctx.globalAlpha = 1; // Adjust the transparency value as needed
-    
-  
-        this.canvas.style.position = 'absolute';
-        this.canvas.style.left = '50%';
-        this.canvas.style.top = '50%';
-        this.canvas.style.transform = 'translate(-50%, -50%)'; // Center the canvas
-  
-         // Add keydown event listener for zooming
-        document.addEventListener('keydown', this.handleKeyDown.bind(this));
+  init(data) {
+    this.data = data;
+    this.canvas = document.getElementById('gridCanvas');
 
-        this.renderGrid(data);
-      
-        } else {
-        console.error("Canvas not found");
-      }
-    },
+    if (this.canvas) {
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
 
-    handleKeyDown(event) {
-        if (event.key === '-') {
-          // Zoom out
-          this.squareSize -= 5; // Adjust the step size as needed
-          this.renderGrid(this.data);
-        } else if (event.key === '=') {
-          // Zoom in
-          this.squareSize += 5; // Adjust the step size as needed
-          this.renderGrid(this.data);
-        }
-      },
-  
-    renderGrid(data) {
-      const gridCanvas = document.getElementById('gridCanvas');
-  
-      if (gridCanvas) {
-        const ctx = gridCanvas.getContext('2d');
-  
-        const gridSize = Math.ceil(Math.sqrt(data.length));
-        const squareSize = 50;
-  
-        const canvasWidth = gridSize * squareSize;
-        const canvasHeight = gridSize * squareSize;
-  
-        gridCanvas.width = canvasWidth;
-        gridCanvas.height = canvasHeight;
-  
-        data.forEach((item, index) => {
-          const row = Math.floor(index / gridSize);
-          const col = index % gridSize;
-  
-          const x = col * squareSize;
-          const y = row * squareSize;
-  
-          ctx.fillStyle = item.fill;
-          ctx.fillRect(x, y, squareSize, squareSize);
-  
-          ctx.fillStyle = 'white';
-          ctx.font = '12px Arial';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(item.name, x + squareSize / 2, y + squareSize / 2);
-        });
+      this.canvas.style.position = 'absolute';
+      this.canvas.style.left = '50%';
+      this.canvas.style.top = '50%';
+      this.canvas.style.transform = 'translate(-50%, -50%)'; // Center the canvas
+     
+
+    // Add keydown event listener for zooming
+      document.addEventListener('keydown', this.handleKeyDown.bind(this));
+      this.renderGrid(data);
+
+    // Initialize Paint module with gridData       
+      Paint.init(data);
+      this.updatePaintCanvasSize(Math.ceil(Math.sqrt(this.data.length))); // Update paintCanvas size
+   
       } else {
-        console.error("gridCanvas not found");
-      }
-    },
+      console.error("Canvas not found");
+    }
+  },
+
+
+  renderGrid(data) {
+    const gridCanvas = document.getElementById('gridCanvas');
+
+    if (gridCanvas) {
+      const ctx = gridCanvas.getContext('2d');
+
+      const gridSize = data.length; // Fixed by Master Array structure
+      const squareSize = this.squareSize; // Relative to Zooming in and out
+
+      const canvasWidth = gridSize * squareSize;
+      const canvasHeight = gridSize * squareSize;
+
+      gridCanvas.width =  canvasWidth ;
+      gridCanvas.height = canvasHeight ;
+      console.log(data)
+
+      data.forEach((col, x) => {
+        col.forEach((_, y) => {
+
+          ctx.fillStyle = data[x][y].fill;
+          ctx.fillRect(x*squareSize, y*squareSize, squareSize, squareSize);
+          ctx.strokeStyle = 'lime';
+          ctx.lineWidth = 4;
+          ctx.strokeRect(x*squareSize, y*squareSize, squareSize, squareSize);
   
-    getCurrentData() {
-      return this.data;
-    },
-  };
-  
-  export default Grid;
-  
-  
+          if (squareSize > 50) { // Only render text if squareSize is larger than 20
+            ctx.fillStyle = 'white';
+            ctx.font = 'Bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(data[x][y].name, (x* squareSize) + (squareSize / 2), (y* squareSize) + (squareSize / 2));
+          }
+        })
+
+      })
+
+     
+    } else {
+      console.error("gridCanvas not found");
+    }
+    
+    this.updatePaintCanvas();
+  },
+
+  updatePaintCanvasSize(gridSize) {
+    const paintCanvas = document.getElementById('paintCanvas');
+    if (paintCanvas) {
+      const squareSize = this.squareSize;
+      const canvasWidth = gridSize * squareSize;
+      const canvasHeight = gridSize * squareSize;
+      paintCanvas.width = canvasWidth;
+      paintCanvas.height = canvasHeight;
+      
+      this.updatePaintCanvas(); // Update other properties/styles for paintCanvas
+    } else {
+      console.error("paintCanvas not found");
+    }
+},
+
+  updatePaintCanvas() {
+    const paintCanvas = document.getElementById('paintCanvas');
+    
+    if (paintCanvas) {
+      paintCanvas.width = this.canvas.width;
+      paintCanvas.height = this.canvas.height;
+   
+    }
+  },
+
+  handleKeyDown(event) {
+    if (event.key === '-') {
+      // Zoom out
+      this.squareSize -= 5;
+      this.renderGrid(this.data);
+      this.updatePaintCanvasSize(this.data.length);
+    } else if (event.key === '=') {
+      // Zoom in
+      this.squareSize += 5;
+      this.renderGrid(this.data);
+      this.updatePaintCanvasSize(this.data.length);
+    }
+    // Call updatePaintCanvas here as well
+    this.updatePaintCanvas();
+},
+
+  getCurrentData() {
+    return this.data;
+  },
+};
+
+export default Grid;
