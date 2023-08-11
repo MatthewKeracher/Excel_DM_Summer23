@@ -30,7 +30,7 @@ class Toolbar {
     
       if (!isNaN(gridSize) && gridSize > 0) {
         const numEntries = gridSize //* gridSize; // Calculate total entries based on grid size
-        const newData = State.generateJSONData(numEntries, gridSize);
+        const newData = State.generateMap(numEntries, gridSize);
         Grid.init(newData);
         const projectTitle = document.getElementById('projectTitle');
         projectTitle.textContent = 'Untitled';

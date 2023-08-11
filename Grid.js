@@ -1,4 +1,5 @@
 import Paint from './Paint.js';
+import State from './State.js';
 
 const Grid = {
   squareSize: 75, // Initial square size
@@ -37,7 +38,7 @@ const Grid = {
 
     if (gridCanvas) {
       const ctx = gridCanvas.getContext('2d');
-
+      console.log(data.length + ' entries long. ')
       const gridSize = data.length; // Fixed by Master Array structure
       const squareSize = this.squareSize; // Relative to Zooming in and out
 
@@ -105,20 +106,20 @@ const Grid = {
     if (event.key === '-') {
       // Zoom out
       this.squareSize -= 5;
-      this.renderGrid(this.data);
-      this.updatePaintCanvasSize(this.data.length);
+      this.renderGrid(State.mapArray);
+      this.updatePaintCanvasSize(State.mapArray.length);
     } else if (event.key === '=') {
       // Zoom in
       this.squareSize += 5;
-      this.renderGrid(this.data);
-      this.updatePaintCanvasSize(this.data.length);
+      this.renderGrid(State.mapArray);
+      this.updatePaintCanvasSize(State.mapArray.length);
     }
     // Call updatePaintCanvas here as well
     this.updatePaintCanvas();
 },
 
   getCurrentData() {
-    return this.data;
+    return State.mapArray;
   },
 };
 

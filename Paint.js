@@ -1,6 +1,8 @@
 // Paint.js
 
-import State from './State.js'; // Make sure to adjust the import path
+import State from './State.js'; 
+import Grid from './Grid.js'; 
+
 
 const editForm = {
   form: document.getElementById('edit-form'),
@@ -50,7 +52,7 @@ const Paint = {
         editForm.form.removeAttribute('style')
         editForm.x.value = col
         editForm.y.value = row
-        editForm.name.value = "" + col + " - " + row
+        editForm.name.value = "Edit: " + col + " - " + row
         editForm.fill.value = "white"
 
         // Add an event listener for the form submit event
@@ -63,20 +65,15 @@ const Paint = {
       // Handles Form Submit
         handleSubmit(event) {
         event.preventDefault(); // Prevent the default form submission behavior
-
-        console.log(State.MasterArray)
-
+     
         const x = editForm.x.value; // Get the x value from the form
         const y = editForm.y.value; // Get the y value from the form
-
-        console.log(x + y)
-
-
+      
+        console.log('Updating at (' + x + ',' + y + ')' );
+        console.log(State.mapArray[x][y]);
       // Update the data in the MasterArray at the specified x and y coordinates
-      State.MasterArray[x][y] = { name: editForm.name.value, fill: editForm.fill.value }
-
-      // Log the updated MasterArray to the console
-      console.log(State.MasterArray);
+      State.mapArray[x][y] = { name: editForm.name.value, fill: editForm.fill.value }
+          Grid.renderGrid(State.mapArray)
   
     },
   
