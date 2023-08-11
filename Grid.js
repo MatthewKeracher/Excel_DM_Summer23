@@ -2,11 +2,11 @@ import Paint from './Paint.js';
 import State from './State.js';
 
 const Grid = {
-  squareSize: 75, // Initial square size
+  squareSize: 50, // Initial square size
   canvas: null,
 
   init(data) {
-    this.data = data;
+    this.data = State.mapArray;
     this.canvas = document.getElementById('gridCanvas');
 
     if (this.canvas) {
@@ -38,29 +38,29 @@ const Grid = {
 
     if (gridCanvas) {
       const ctx = gridCanvas.getContext('2d');
-      console.log(data.length + ' entries long. ')
+      //console.log(data.length + ' entries long. ')
       const gridSize = data.length; // Fixed by Master Array structure
       const squareSize = this.squareSize; // Relative to Zooming in and out
 
-      const canvasWidth = gridSize * squareSize;
+      const canvasWidth =  gridSize * squareSize;
       const canvasHeight = gridSize * squareSize;
 
       gridCanvas.width =  canvasWidth ;
       gridCanvas.height = canvasHeight ;
-      console.log(data)
+      //console.log(data)
 
       data.forEach((col, x) => {
         col.forEach((_, y) => {
 
           ctx.fillStyle = data[x][y].fill;
           ctx.fillRect(x*squareSize, y*squareSize, squareSize, squareSize);
-          ctx.strokeStyle = 'lime';
-          ctx.lineWidth = 4;
+          ctx.strokeStyle = 'black';
+          ctx.lineWidth = squareSize/20;
           ctx.strokeRect(x*squareSize, y*squareSize, squareSize, squareSize);
   
-          if (squareSize > 50) { // Only render text if squareSize is larger than 20
+          if (squareSize > 63) { // Only render text if squareSize is larger than 20
             ctx.fillStyle = 'white';
-            ctx.font = 'Bold 14px Arial';
+            ctx.font = 'Bold ' + squareSize/5 + 'px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(data[x][y].name, (x* squareSize) + (squareSize / 2), (y* squareSize) + (squareSize / 2));
@@ -105,17 +105,18 @@ const Grid = {
   handleKeyDown(event) {
     if (event.key === '-') {
       // Zoom out
-      this.squareSize -= 5;
+      this.squareSize -= 3;
       this.renderGrid(State.mapArray);
       this.updatePaintCanvasSize(State.mapArray.length);
     } else if (event.key === '=') {
       // Zoom in
-      this.squareSize += 5;
+      this.squareSize += 3;
       this.renderGrid(State.mapArray);
       this.updatePaintCanvasSize(State.mapArray.length);
     }
     // Call updatePaintCanvas here as well
     this.updatePaintCanvas();
+    //console.log('squareSize: ' + this.squareSize)
 },
 
   getCurrentData() {

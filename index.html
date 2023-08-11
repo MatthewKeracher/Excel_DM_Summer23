@@ -4,59 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Your Project</title>
+    <title>Excel_DM</title>
 </head>
 <body>
-    <header>
-        <div class="title-container">
-            <h1 id="projectTitle">Untitled</h1>
-            <div id="toolbar">
-                <button class = button id="newButton">New</button>
-                <button class = button id="saveButton">Save</button>
-                <button class = button id="loadButton">Load</button>
-            </div>
-        </div>
-    </header>
-    <main>
-        <div class="container">
-            <div class="sidebar">
-                <aside id="sidebar"></aside>
-                <div>
-                    <form id="edit-form" style="display: none;">
-                        
-                        <input id="form-x" name="x" type="hidden" value="0">                       
-                     
-                        <input id="form-y" name="y" type="hidden" value="0">
-                        
-                        <label for="name">Name:</label>                        
-                        <input id="form-name" name="name" type="text" value="TEST">
-                        
-                        <label for="fill">Fill:</label>
-                        <input id="form-fill" name="fill" type="text" value="black">
 
-                        <button type="submit">Save</button>
+<header>
+        
+<div class="title-container">
+<h1 id="projectTitle">Untitled</h1>
+</div>
 
-                    </form>
-                </div>
-                <!--The fo rm fields are made dynamically in Sidebar.js-->
-            </div>
-            <div class="main-content">
-                <div class="canvas-container">
-                    <canvas id="gridCanvas" class="canvas"></canvas>
-                    <canvas id="paintCanvas" class="canvas"></canvas>
-                </div>
-            </div>
-        </div>
+    <div class = toolbar id="toolbar">
+    <button class = button id="newButton">[N]ew</button>
+    <button class = button id="saveButton">[S]ave</button>
+    <button class = button id="loadButton">[L]oad</button>
+    <button class = button id="paintButton">[P]aint</button>
+    </div>
+
+</header>
+
+<main>
+
+<form id="edit-form" style="display: none;">                        
+    <input id="form-x" name="x" type="hidden" value="0">                    
+    <input id="form-y" name="y" type="hidden" value="0">                      
+    <label for="name">Name:</label>                        
+    <input id="form-name" name="name" type="text" value="">                    
+    <input id="form-fill" name="fill" type="hidden" value="">
+    <button type="submit">Save</button>
+</form>                       
+
+<div class="color-palette" id = "painter" style="display: none;">  
+        <div class="color" data-color="#ffffff" style="background-color: white;"></div>
+        <div class="color" data-color="#ff0000" style="background-color: red;"></div>
+        <div class="color" data-color="#ff7f00" style="background-color: #ff7f00;"></div>
+        <div class="color" data-color="#ffff00" style="background-color: yellow;"></div>
+        <div class="color" data-color="#00ff00" style="background-color: lime;"></div>
+        <div class="color" data-color="#00ffff" style="background-color: cyan;"></div>
+        <div class="color" data-color="#008080" style="background-color: teal;"></div>
+        <div class="color" data-color="#0000ff" style="background-color: blue;"></div>
+        <div class="color" data-color="#ff00ff" style="background-color: magenta;"></div>
+        <div class="color" data-color="#a020f0" style="background-color: purple;"></div>
+        <div class="color" data-color="#808080" style="background-color: gray;"></div>
+        <div class="color" data-color="#a52a2a" style="background-color: brown;"></div>
+        <div class="color" data-color="#008000" style="background-color: green;"></div>
+        <div class="color" data-color="#ffa500" style="background-color: orange;"></div>
+        <div class="color" data-color="#d3ffce" style="background-color: #d3ffce;"></div>
+        <div class="color" data-color="#b0e0e6" style="background-color: #b0e0e6;"></div>
+        <div class="color" data-color="#ffc0cb" style="background-color: pink;"></div>
+        <div class="color" data-color="#e6e6fa" style="background-color: #e6e6fa;"></div>
+        <div class="color" data-color="#dda0dd" style="background-color: #dda0dd;"></div>
+        <div class="color" data-color="#f0e68c" style="background-color: khaki;"></div>
+        
+    </div >  
+     
+    <div class="main-content">
+
+    <div class="canvas-container">
+
+    <canvas id="gridCanvas" class="canvas"></canvas>
+    <canvas id="paintCanvas" class="canvas"></canvas>
+
+    </div>
+    </div>
+        
     </main>
     <footer>
-        <p>&copy; 2023 Your Name</p>
+    <p>&copy; 2023 Excel_DM</p>
     </footer>
+
     <script type="module" src="Grid.js"></script>
     <script type="module" src="Toolbar.js"></script>
     <script type="module" src="State.js"></script>
-    <script type="module" src="Paint.js"></script>
+    <script type="module" src="Paint.js"></script> 
    
-    
-   
+    <audio id="clickSound" src="click_sound.mp3" preload="auto"></audio>
+
 </body>
 </html>

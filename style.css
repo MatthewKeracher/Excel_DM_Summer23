@@ -7,98 +7,36 @@
 
 /* Set the background color and font */
 body {
-  background-color: #1c1f24;
+  background-color: black;
   font-family: Helvetica, Arial, sans-serif;
-  color: white;
-}
+  color: lime;}
 
-/* Center header text and add some space */
-header {
+.title-container{
+  width: 100%;
   text-align: left;
   padding: 20px;
   font-size: 24px;
+  -webkit-text-stroke: 1px black; 
   font-weight: bold;
   position: relative;
-  z-index: 2;
-}
+  z-index: 2;} 
 
-/* Add space to footer */
-footer {
-  text-align: center;
-  padding: 20px;
+.toolbar {  
+/* New, Save, etc. */
   position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 2;
-}
-
-/* Center toolbar buttons */
-.toolbar-container {
-  text-align: left;
-  padding: 10px;
+  top: 5%;
+  right: 5%;
+  text-align: left;  
   margin: 5px;
-  position: relative;
-  z-index: 10;
-}
-
+ /* border: 5px solid lime; */
+  z-index: 5;}
+  
 .button {
   font-size: 20px;
-  padding: 10px 20px;
-  /* Add more styling if needed */
-}
+  padding: 10px 20px;}
 
-/* Center canvas */
-.canvas-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 90vh;
-  position: relative;
-  z-index: 0;
-}
-
-/* Set canvas size */
-.canvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-}
-
-/* Add pink outline to gridCanvas */
-#gridCanvas {
-  
-  opacity: 0.7;
-}
-
-/* Add white outline to paintCanvas */
-#paintCanvas {
-  
-  opacity: 1;
-}
-
-/* Style for the sidebar */
-.container {
-  display: flex;
-  height: 100vh;
-  overflow: hidden; /* Prevent sidebar content from overflowing */
-}
-
-.sidebar {
-  flex: 0 0 300px; /* Sidebar width */
-  background-color: #333;
-  color: white;
-  padding: 20px;
-  box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.3);
-  z-index: 2; /* Place sidebar above other elements */
-}
-
-.main-content {
-  flex: 1;
-  padding: 20px;
-  background-color: #2c2f34;
-}
+.paint-button {
+  border: 5px solid lime;}
 
 /* Form styling */
 form {
@@ -129,4 +67,56 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: teal;
+}
+
+  .color-palette {
+    
+    position: fixed;
+    top: 50%; /* Vertically center the palette */
+    right: 5%; /* 5% from the right side of the screen */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+   
+    flex-wrap: wrap;
+    flex-direction: row; /* Optional, as 'row' is the default value */
+    justify-content: flex-start; /* Start the colors from the left */
+    justify-content: center; /* Center-align the color divs horizontally */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 3 columns */
+    border: 5px solid lime;
+    opacity: 0.9;    
+    z-index: 6;
+  }
+  
+
+.color {  
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  border: 3px solid black;
+}
+
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  
+
+.canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  border: 5px solid lime;
+  opacity: 0.9
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
 }

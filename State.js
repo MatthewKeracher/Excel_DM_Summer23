@@ -1,3 +1,5 @@
+import Grid from './Grid.js';
+
 const State = {
   mapArray: [],
 
@@ -11,7 +13,7 @@ const State = {
       }));
       return columns;
     });
-    console.log('generateMap() returned this:', rows)
+    //console.log('generateMap() returned this:', rows)
     return rows;
   },
 
@@ -25,6 +27,11 @@ const State = {
   //Exports the MasterArray as JSON data to a file. 
   exportJSONData(data) {
     const fileName = prompt('Enter a file name:', 'data.json');
+    const projectTitle = document.getElementById('projectTitle');
+          projectTitle.textContent = fileName + '.json' || 'Untitled';
+          console.log('Project title updated:', projectTitle.textContent);
+        
+
     if (!fileName) {
       return;
     }
@@ -43,8 +50,10 @@ const State = {
   },
 
   init() {
+    //console.log('State.init()')
     this.mapArray = this.generateMap(10, 10); // Default 10x10 grid
-
+    Grid.init(this.mapArray);
+    
     
   },
 
