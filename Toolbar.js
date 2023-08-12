@@ -126,7 +126,10 @@ class Toolbar {
 
     const clickSound = document.getElementById('clickSound');        
         clickSound.currentTime = 1.5; // Rewind the sound to the beginning
-        clickSound.play(); // Play the sound      
+        clickSound.play(); // Play the sound
+        
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
       
 
       const gridSizeInput = prompt("Enter the grid size (width, height):", "10,10");
