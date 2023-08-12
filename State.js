@@ -9,7 +9,7 @@ const State = {
     const rows = Array.from({ length: numEntries }, (_, x) => {
       const columns = Array.from({ length: numEntries }, (_, y) => ({
         name: '',
-        fill: '', //'#2596be',
+        fill: '#2596be',
         text: ''
       }));
       return columns;
