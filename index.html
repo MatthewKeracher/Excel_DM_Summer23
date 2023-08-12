@@ -27,17 +27,24 @@
 <main>
 
 <div class="textbox-container">
-<textarea id="Textbox" rows="20" cols="20"></textarea>
-</div>
 
-<form id="edit-form" style="display: none;">                        
+    <textarea id="Namebox" rows="1" cols="1" style = "border: 5px solid hotpink; color: hotpink"></textarea>
+    <textarea id="Textbox" rows="20" cols="20"></textarea>
+
+<form id="edit-form">                        
     <input id="form-x" name="x" type="hidden" value="0">                    
-    <input id="form-y" name="y" type="hidden" value="0">                      
-    <label for="name">Name:</label>                        
-    <input id="form-name" name="name" type="text" value="">                    
+    <input id="form-y" name="y" type="hidden" value="0">                                     
+    <input id="form-name" name="name" type="hidden" value="">                    
     <input id="form-fill" name="fill" type="hidden" value="">
     <button type="submit">Save</button>
-</form>                       
+
+</form> 
+
+   
+
+</div>
+
+                      
 
 <div class="color-palette" id = "painter" style="display: none;">  
         <div class="color" data-color="#ffffff" style="background-color: white;"></div>

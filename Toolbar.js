@@ -71,7 +71,9 @@ class Toolbar {
               Grid.renderGrid(State.mapArray);
               Grid.updatePaintCanvasSize(State.mapArray.length);
               Grid.updatePaintCanvas();
-              break;          
+              break;  
+              
+              //Arrow Keys
            
             default:
             // Handle other key presses if necessary

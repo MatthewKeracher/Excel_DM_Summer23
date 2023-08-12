@@ -17,7 +17,7 @@ export { editForm };
 
 const colorPalette = document.querySelectorAll('.color');
 const textbox = document.getElementById('Textbox')
-
+const namebox = document.getElementById('Namebox')
 
 
 
@@ -98,18 +98,26 @@ const Paint = {
           this.SqData = this.gridData[index];      
           
           //When click on canvas ready variables for Form submit
+
+          let Square = State.mapArray[col][row]
+
+          console.log(row + ' ' + col + ' ' + Square.fill)
           
-          editForm.name.value = State.mapArray[row][col].name
+          editForm.name.value = Square.name
+          editForm.fill.value = Square.fill
           editForm.x.value = col;
           editForm.y.value = row;
-          textbox.value = State.mapArray[row][col].text
+          textbox.value = Square.text
+          namebox.value = Square.name
+
+          // Add an event listener for the form submit event
+          editForm.form.addEventListener('submit', this.handleSubmit.bind(this));
           
           // Check if paint mode is ACTIVE.
           if (!this.paintBlock) {             
           editForm.fill.value = this.selectedColor;
                  
-          // Add an event listener for the form submit event
-          editForm.form.addEventListener('submit', this.handleSubmit.bind(this));
+          
 
           // Single click ==> Submits Form
           editForm.form.querySelector('button[type="submit"]').click();
@@ -123,7 +131,9 @@ const Paint = {
 
 
 // Handles Form Submit
+
 handleSubmit(event) {
+
 event.preventDefault(); // Prevent the default form submission behavior
      
 const x = editForm.x.value; // Get the x value from the form
@@ -133,15 +143,14 @@ console.log(textbox.value)
       
 
   State.mapArray[x][y] = {
-    name: editForm.name.value,
+
+    name: namebox.value,
     fill: editForm.fill.value,
-    text: 'painted ' + editForm.fill.value,}
+    text: textbox.value,}
    
 
 Grid.renderGrid(State.mapArray)
-textbox.value = State.mapArray[x][y].text
 
-  
 },
 
     

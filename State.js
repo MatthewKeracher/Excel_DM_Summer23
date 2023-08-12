@@ -8,9 +8,9 @@ const State = {
 
     const rows = Array.from({ length: numEntries }, (_, x) => {
       const columns = Array.from({ length: numEntries }, (_, y) => ({
-        name: `Item ${x} - ${y}`,
-        fill: this.getRandomColor(),
-        text: `Item ${x} - ${y}`
+        name: '',
+        fill: 'green',
+        text: ''
       }));
       return columns;
     });

@@ -41,6 +41,7 @@ body {
 /* Form styling */
 form {
   margin-top: 20px;
+  
 }
 
 /* Reset default margin and padding */
@@ -65,12 +66,24 @@ body {
  
 }
 
+form-name {
+  
+  background-color: black;
+  border: 5px solid lime;
+  color: orange;
+  padding: 5px;
+  resize: none;
+  outline: none;
+  font-size: 20px;
+
+}
+
 textarea {
   width: 100%;  
   background-color: black;
   border: 5px solid lime;
   color: orange;
-  padding: 5px;
+  padding: 10px;
   resize: none;
   outline: none;
   font-size: 20px;
@@ -91,16 +104,18 @@ input[type="text"] {
 }
 
 button[type="submit"] {
-  background-color: orange;
-  color: white;
-  border: none;
+  background-color: black;
+  color: hotpink;
+  border: 5px solid hotpink;
+  font-size: 20px;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
 }
 
 button[type="submit"]:hover {
-  background-color: teal;
+  color: lime;
+  border: 5px solid lime;
 }
 
   .color-palette {
@@ -117,7 +132,7 @@ button[type="submit"]:hover {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 3 columns */
     border: 5px solid lime;
-    opacity: 0.9;    
+    opacity: 1;    
     z-index: 6;
   }
   
