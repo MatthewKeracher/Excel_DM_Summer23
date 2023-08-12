@@ -72,82 +72,80 @@ const Paint = {
       }},
 
       
-        handleCanvasClick(event) {
+          handleCanvasClick(event) {
 
-          const clickSound = document.getElementById('clickSound');        
-          clickSound.currentTime = 1.5; // Rewind the sound to the beginning
-          clickSound.play(); // Play the sound
-           
-          const rect = this.paintCanvas.getBoundingClientRect();
-          const mouseX = event.clientX - rect.left;
-          const mouseY = event.clientY - rect.top;
-        
-          // Calculate the row and column based on the click position
-          const gridSize = this.gridData.length;
-          const squareSize = this.paintCanvas.width / gridSize;
-        
-          const col = Math.floor(mouseX / squareSize);
-          const row = Math.floor(mouseY / squareSize);
-          const index = row * gridSize + col;
-          
-        
-          // Draw outline on the paintCanvas
-          this.drawOutline(col * squareSize, row * squareSize, squareSize, squareSize);
-        
-          // Store the clicked square data
-          this.SqData = this.gridData[index];      
-          
-          //When click on canvas ready variables for Form submit
-
-          let Square = State.mapArray[col][row]
-
-          console.log(row + ' ' + col + ' ' + Square.fill)
-          
-          editForm.name.value = Square.name
-          editForm.fill.value = Square.fill
-          editForm.x.value = col;
-          editForm.y.value = row;
-          textbox.value = Square.text
-          namebox.value = Square.name
-
-          // Add an event listener for the form submit event
-          editForm.form.addEventListener('submit', this.handleSubmit.bind(this));
-          
-          // Check if paint mode is ACTIVE.
-          if (!this.paintBlock) {             
-          editForm.fill.value = this.selectedColor;
-                 
-          
-
-          // Single click ==> Submits Form
-          editForm.form.querySelector('button[type="submit"]').click();
-
-          }
-
-          // Draw outline on the paintCanvas
-          this.drawOutline(col * squareSize, row * squareSize, squareSize, squareSize);   
+            const clickSound = document.getElementById('clickSound');        
+            clickSound.currentTime = 1.5; // Rewind the sound to the beginning
+            clickSound.play(); // Play the sound
             
-          },
+            const rect = this.paintCanvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+          
+            // Calculate the row and column based on the click position
+            const gridSize = this.gridData.length;
+            const squareSize = this.paintCanvas.width / gridSize;
+          
+            const col = Math.floor(mouseX / squareSize);
+            const row = Math.floor(mouseY / squareSize);
+            const index = row * gridSize + col;
+            
+          
+            // Draw outline on the paintCanvas
+            this.drawOutline(col * squareSize, row * squareSize, squareSize, squareSize);
+          
+            // Store the clicked square data
+            this.SqData = this.gridData[index];      
+            
+            //When click on canvas ready variables for Form submit
+
+            let Square = State.mapArray[col][row]
+
+            //console.log(row + ' ' + col + ' ' + Square.fill)
+
+            //namebox.focus();
+            
+            editForm.name.value = Square.name
+            editForm.fill.value = Square.fill
+            editForm.x.value = col;
+            editForm.y.value = row;
+            textbox.value = Square.text
+            namebox.value = Square.name
+
+            
+                      
+            // Check if paint mode is ACTIVE.
+            if (!this.paintBlock) {             
+            editForm.fill.value = this.selectedColor;                
+            
+
+            // Single click ==> Submits Form
+            editForm.form.querySelector('button[type="submit"]').click();
+            
+            }
+
+            // Draw outline on the paintCanvas
+            this.drawOutline(col * squareSize, row * squareSize, squareSize, squareSize);   
+              
+            },
 
 
 // Handles Form Submit
 
 handleSubmit(event) {
 
+console.log('Form Submitted ' )
+  
 event.preventDefault(); // Prevent the default form submission behavior
      
 const x = editForm.x.value; // Get the x value from the form
-const y = editForm.y.value; // Get the y value from the form
-
-console.log(textbox.value)
-      
+const y = editForm.y.value; // Get the y value from the form  
 
   State.mapArray[x][y] = {
 
     name: namebox.value,
     fill: editForm.fill.value,
-    text: textbox.value,}
-   
+    text: textbox.value,}    
 
 Grid.renderGrid(State.mapArray)
 

@@ -83,6 +83,9 @@ class Toolbar {
     });
     
     State.init(); // Start listening for JSON data changes. 
+    
+    // Add the new event listener for the form submit event
+    editForm.form.addEventListener('submit', Paint.handleSubmit.bind(this));
   
   }
 

@@ -32,6 +32,7 @@ const Grid = {
     }
   },
 
+      
 
   renderGrid(data) {
     const gridCanvas = document.getElementById('gridCanvas');
@@ -93,6 +94,7 @@ const Grid = {
 },
 
   updatePaintCanvas() {
+
     const paintCanvas = document.getElementById('paintCanvas');
     
     if (paintCanvas) {
@@ -101,8 +103,6 @@ const Grid = {
    
     }
   },
-
-
 
   getCurrentData() {
     return State.mapArray;
