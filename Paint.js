@@ -132,11 +132,9 @@ const Paint = {
 
 // Handles Form Submit
 
-handleSubmit(event) {
-
-console.log('Form Submitted ' )
-  
-event.preventDefault(); // Prevent the default form submission behavior
+handleSubmit(e) {
+ 
+e.preventDefault(); // Prevent the default form submission behavior
      
 const x = editForm.x.value; // Get the x value from the form
 const y = editForm.y.value; // Get the y value from the form  
@@ -148,6 +146,8 @@ const y = editForm.y.value; // Get the y value from the form
     text: textbox.value,}    
 
 Grid.renderGrid(State.mapArray)
+
+
 
 },
 
@@ -171,7 +171,10 @@ drawOutline(x, y, width, height) {
       paintCtx.strokeStyle = Paint.selectedColor;}      
       paintCtx.lineWidth = 6;
       paintCtx.strokeRect(x, y, width, height);
+
+      
 },
+
 
 
 };

@@ -3,6 +3,7 @@ import State from './State.js';
 
 const Grid = {
   squareSize: 50, // Initial square size
+    
   canvas: null,
 
   init(data) {

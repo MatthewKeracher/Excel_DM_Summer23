@@ -83,7 +83,7 @@ class Toolbar {
     });
     
     State.init(); // Start listening for JSON data changes. 
-    
+
     // Add the new event listener for the form submit event
     editForm.form.addEventListener('submit', Paint.handleSubmit.bind(this));
   
@@ -116,19 +116,29 @@ class Toolbar {
       painter.style.display = 'none';
       // editForm.form.style.display = 'none';
     }}
+
+    
+
+
   }       
 
   handleNewButtonClick() {     
 
     const clickSound = document.getElementById('clickSound');        
         clickSound.currentTime = 1.5; // Rewind the sound to the beginning
-        clickSound.play(); // Play the sound
+        clickSound.play(); // Play the sound      
       
-      const gridSize =  parseInt(prompt("Enter the grid size:", "10")); // Set default value to 10
-      
-      if (!isNaN(gridSize) && gridSize > 0) {
-        const numEntries = gridSize //* gridSize; // Calculate total entries based on grid size
-        State.mapArray = State.generateMap(numEntries, gridSize);
+
+      const gridSizeInput = prompt("Enter the grid size (width, height):", "10,10");
+      const gridSizeArray = gridSizeInput.split(',').map(Number);
+
+      const mapWidth =  gridSizeArray[0] || 10; // Set default value to 10 if not provided
+      const mapHeight = gridSizeArray[1] || 10; // Set default value to 10 if not provided
+
+            
+      if (!isNaN(mapWidth) && mapWidth > 0) {
+        
+        State.mapArray = State.generateMap(mapWidth, mapHeight);
         Grid.init(State.mapArray);
         const projectTitle = document.getElementById('projectTitle');
         projectTitle.textContent = 'Untitled';

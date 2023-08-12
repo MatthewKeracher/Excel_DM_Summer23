@@ -9,7 +9,10 @@
 body {
   background-color: black;
   font-family: Helvetica, Arial, sans-serif;
-  color: lime;}
+  color: lime;
+  /*background-image: url('https://i.pinimg.com/originals/44/e4/63/44e4636259fc47f65feb95c70e22c925.jpg');
+  background-size: cover;*/
+}
 
 .title-container{
   width: 100%;
@@ -148,8 +151,10 @@ button[type="submit"]:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-}
   
+}
+
+ 
 
 .canvas {
   position: absolute;
@@ -158,7 +163,8 @@ button[type="submit"]:hover {
   transform: translate(-50%, -50%);
   z-index: 0;
   border: 5px solid lime;
-  opacity: 0.9
+  opacity: 1;
+  
 }
 
 footer {
