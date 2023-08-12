@@ -20,7 +20,7 @@ const Grid = {
      
 
     // Add keydown event listener for zooming
-      document.addEventListener('keydown', this.handleKeyDown.bind(this));
+      //document.addEventListener('keydown', this.handleKeyDown.bind(this));
       this.renderGrid(data);
 
     // Initialize Paint module with gridData       
@@ -102,22 +102,7 @@ const Grid = {
     }
   },
 
-  handleKeyDown(event) {
-    if (event.key === '-') {
-      // Zoom out
-      this.squareSize -= 3;
-      this.renderGrid(State.mapArray);
-      this.updatePaintCanvasSize(State.mapArray.length);
-    } else if (event.key === '=') {
-      // Zoom in
-      this.squareSize += 3;
-      this.renderGrid(State.mapArray);
-      this.updatePaintCanvasSize(State.mapArray.length);
-    }
-    // Call updatePaintCanvas here as well
-    this.updatePaintCanvas();
-    //console.log('squareSize: ' + this.squareSize)
-},
+
 
   getCurrentData() {
     return State.mapArray;

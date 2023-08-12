@@ -13,11 +13,8 @@ class Toolbar {
 
   init() {
 
-
-
     const newButton = document.getElementById('newButton');
-    newButton.addEventListener('click', this.handleNewButtonClick);
-  
+    newButton.addEventListener('click', this.handleNewButtonClick);  
 
     const saveButton = document.getElementById('saveButton');
     saveButton.addEventListener('click', this.handleSaveButtonClick);
@@ -58,17 +55,25 @@ class Toolbar {
             this.handlePaintButtonClick();
             break;
 
-            case 'r':
-              // Prompt to change the name
-              const newName = prompt('Enter a new name:');
-              if (newName !== null) {
-                editForm.name.value = newName;
-              }
+          
+          case '-':
+              //prompt to zoom out
+              // Zoom out
+              Grid.squareSize -= 3;
+              Grid.renderGrid(State.mapArray);
+              Grid.updatePaintCanvasSize(State.mapArray.length);
+              Grid.updatePaintCanvas();
               break;
-    
-          // Add more cases for other hotkeys as needed
-    
-          default:
+
+          case '=':
+              // Zoom in
+              Grid.squareSize += 3;
+              Grid.renderGrid(State.mapArray);
+              Grid.updatePaintCanvasSize(State.mapArray.length);
+              Grid.updatePaintCanvas();
+              break;          
+           
+            default:
             // Handle other key presses if necessary
             break;
         }
@@ -86,23 +91,26 @@ class Toolbar {
       clickSound.play(); // Play the sound
 
     let painter = document.getElementById('painter')
+
     //let editForm = document.getElementById('editForm')
 
-    Paint.togglePaintMode();
-    // Check if paint mode is active
-    if (Paint.paintMode) {
-    //NOT PAINTING
-    paintButton.classList.remove('paint-button');
-    painter.style.display = 'none';
-    //editForm.form.style.display = 'none';
   
-    } else {
+    if (painter.style.display === 'none') {
+      //PAINTING 
+      paintButton.classList.add('paint-button');
+      painter.style.display = 'grid'; 
+      // editForm.form.style.display = 'block';
     
-    paintButton.classList.add('paint-button');
-    painter.style.display = 'grid'; 
-    //editForm.form.style.display = 'block';
-    }
-
+    }else{ 
+    
+    if (painter.style.display === 'grid') {
+      // NOT PAINTING
+      Paint.togglePaintMode();
+      Paint.isFirstClick = true;
+      paintButton.classList.remove('paint-button');
+      painter.style.display = 'none';
+      // editForm.form.style.display = 'none';
+    }}
   }       
 
   handleNewButtonClick() {     

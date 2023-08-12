@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:," />
     <title>Excel_DM</title>
 </head>
 <body>
@@ -24,6 +25,10 @@
 </header>
 
 <main>
+
+<div class="textbox-container">
+<textarea id="Textbox" rows="20" cols="20"></textarea>
+</div>
 
 <form id="edit-form" style="display: none;">                        
     <input id="form-x" name="x" type="hidden" value="0">                    
@@ -77,7 +82,9 @@
     <script type="module" src="Toolbar.js"></script>
     <script type="module" src="State.js"></script>
     <script type="module" src="Paint.js"></script> 
-   
+    <script type="module" src="Boop.js"></script> 
+
+    
     <audio id="clickSound" src="click_sound.mp3" preload="auto"></audio>
 
 </body>

@@ -10,10 +10,11 @@ const State = {
       const columns = Array.from({ length: numEntries }, (_, y) => ({
         name: `Item ${x} - ${y}`,
         fill: this.getRandomColor(),
+        text: `Item ${x} - ${y}`
       }));
       return columns;
     });
-    //console.log('generateMap() returned this:', rows)
+    console.log('generateMap() returned this:', rows)
     return rows;
   },
 
