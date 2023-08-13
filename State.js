@@ -61,13 +61,49 @@ const State = {
     const fullHeight = Math.floor(screenHeight / Grid.squareSize);
 
     //console.log('State.init()')
-    this.mapArray = this.generateMap(fullWidth,fullHeight); 
+    this.mapArray = this.generateMap(1,1); //fullWidth,fullHeight); 
     Grid.init(this.mapArray);
     
     
   },
 
+  addtoMap() {
+    const newRows = 2; // Number of new rows to add
+    const newColumns = 2; // Number of new columns to add
+    const originalRows = State.mapArray.length;
+    const originalColumns = State.mapArray[0].length;
+    const rowOffset = Math.floor(newRows / 2);
+    const colOffset = Math.floor(newColumns / 2);
+    
+    // Update the map data for both top and bottom sides
+    for (let row = originalRows - 1; row >= 0; row--) {
+      State.mapArray[row + rowOffset] = [...State.mapArray[row]];
+      State.mapArray[row] = Array.from({ length: originalColumns + newColumns }).fill({ name: '', fill: this.defaultFill, text: '' });
+    }
+    
+    // Update the map data for the top side
+    for (let row = originalRows + rowOffset; row < originalRows + newRows; row++) {
+      State.mapArray[row] = Array.from({ length: originalColumns + newColumns }).fill({ name: '', fill: this.defaultFill, text: '' });
+    }
+    
+    // Update the map data for the left and right sides
+    for (let row = 0; row < State.mapArray.length; row++) {
+      for (let col = originalColumns - 1; col >= 0; col--) {
+        State.mapArray[row][col + colOffset] = State.mapArray[row][col];
+        State.mapArray[row][col] = { name: '', fill: this.defaultFill, text: '' };
+      }
+      
+      for (let col = originalColumns + colOffset; col < originalColumns + newColumns; col++) {
+        State.mapArray[row][col] = { name: '', fill: this.defaultFill, text: '' };
+      }
+    }
+    
+    Grid.renderGrid(State.mapArray);
+  }
   
+  
+  
+       
 
 };
 export default State;

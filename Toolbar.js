@@ -13,6 +13,9 @@ class Toolbar {
 
   init() {
 
+    const addButton = document.getElementById('addButton');
+    addButton.addEventListener('click', this.handleAddButtonClick);  
+
     const newButton = document.getElementById('newButton');
     newButton.addEventListener('click', this.handleNewButtonClick);  
 
@@ -25,6 +28,9 @@ class Toolbar {
     const paintButton = document.getElementById('paintButton');
     paintButton.addEventListener('click', this.handlePaintButtonClick);
 
+    const fillButton = document.getElementById('fillButton');
+    fillButton.addEventListener('click', this.handlefillButtonClick);
+
     document.addEventListener('keydown', event => {
       const activeElement = document.activeElement.tagName.toLowerCase();
     
@@ -35,6 +41,12 @@ class Toolbar {
         clickSound.play(); // Play the sound
 
         switch (event.key) {
+
+          case 'a':
+          case 'A':
+            this.handleAddButtonClick();
+            break;
+
           case 'n':
           case 'N':
             this.handleNewButtonClick();
@@ -246,8 +258,17 @@ class Toolbar {
       reader.readAsText(file);
     }
   }
-  };
+  
 
+  handleAddButtonClick() {
+
+
+  State.addtoMap()
+
+  }
+
+
+};
 
 const toolbar = new Toolbar();
 toolbar.init(); // Initialize the toolbar
