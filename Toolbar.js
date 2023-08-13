@@ -246,6 +246,11 @@ class Toolbar {
 
   handleLoadButtonClick = () => {
 
+    //If Painter is on, turn it off!
+    if (document.getElementById('painter').style.display === 'grid') {
+      document.querySelector('#paintButton').click();
+      }
+
     const clickSound = document.getElementById('clickSound');        
         clickSound.currentTime = 1.5; // Rewind the sound to the beginning
         clickSound.play(); // Play the sound
