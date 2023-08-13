@@ -51,10 +51,19 @@ colorPalette.forEach(color => {
 const Paint = {
 
     paintBlock: true,
+
+    //moveMode variables.
+    moveMode: false,
+    oldRow: 0,
+    newRow: 0,
+    oldCol: 0,
+    newCol: 0,
+
     isFirstClick: true, // Flag to track the first click
     paintCanvas: null,
     gridData: null,
     selectedColor: State.defaultFill,
+    Square: '',
 
     togglePaintMode() {
       this.paintBlock = !this.paintBlock;
@@ -63,16 +72,21 @@ const Paint = {
   
     init(gridData) {
       this.paintCanvas = document.getElementById('paintCanvas');
-      this.gridData = gridData;
+      this.gridData = gridData;      
        
-      if (this.paintCanvas) {
-        this.paintCanvas.addEventListener('click', this.handleCanvasClick.bind(this)); // Bind the context here       
-      } else {
-        console.error("paintCanvas not found");
-      }},
+      // if (this.paintCanvas) {
+      //   console.log('Event listener made.')
+      //   this.paintCanvas.addEventListener('click', this.handleCanvasClick.bind(this)); // Bind the context here       
+      // } else {
+      //   console.error("paintCanvas not found");
+      // }
+    
+    },
 
       
           handleCanvasClick(event) {
+
+            //console.log("SOMEONE CLICKED")
 
             const clickSound = document.getElementById('clickSound');        
             clickSound.currentTime = 1.5; // Rewind the sound to the beginning
@@ -99,26 +113,56 @@ const Paint = {
             
             //When click on canvas ready variables for Form submit
 
-            let Square = State.mapArray[col][row]
+            this.Square = State.mapArray[col][row]
 
-            //console.log(row + ' ' + col + ' ' + Square.fill)
+            //MOVING SQUARES
 
-            //namebox.focus();
+            if(this.moveMode === true){             
+
+              if(this.isFirstClick === true) {
+
+                this.oldRow = Math.floor(mouseX / squareSize);
+                this.oldCol = Math.floor(mouseY / squareSize);
+
+                Paint.isFirstClick = false; 
+                console.log(Paint.isFirstClick)
+
+                console.log(this.oldRow + ',' + this.oldCol + ' ' + this.newRow + ',' + this.newCol)
+
+
+              }else{
+
+                this.newRow = Math.floor(mouseX / squareSize);
+                this.newCol = Math.floor(mouseY / squareSize);
+                
+              Grid.moveSquare(this.oldRow, this.oldCol, this.newRow, this.newCol);
             
-            editForm.name.value = Square.name
-            editForm.fill.value = Square.fill
+              document.querySelector('#moveButton').click();
+              //console.log(this.oldRow + ',' + this.oldCol + ' ' + this.newRow + ',' + this.newCol)
+
+              this.oldRow = 0;
+              this.oldCol = 0;
+              this.newRow = 0;
+              this.newCol = 0;
+            
+              }           
+      
+              
+            }    
+
+            //PAINTING SQUARES AND EDITING SQUARES
+            
+            editForm.name.value = this.Square.name
+            editForm.fill.value = this.Square.fill
             editForm.x.value = col;
             editForm.y.value = row;
-            textbox.value = Square.text
-            namebox.value = Square.name
-
-            
-                      
+            textbox.value = this.Square.text
+            namebox.value = this.Square.name
+           
             // Check if paint mode is ACTIVE.
             if (!this.paintBlock) {             
             editForm.fill.value = this.selectedColor;                
-            
-
+           
             // Single click ==> Submits Form
             editForm.form.querySelector('button[type="submit"]').click();
             
@@ -128,9 +172,7 @@ const Paint = {
             this.drawOutline(col * squareSize, row * squareSize, squareSize, squareSize);   
               
             },
-
-
-// Handles Form Submit
+  
 
 handleSubmit(e) {
  
@@ -149,9 +191,7 @@ Grid.renderGrid(State.mapArray)
 
 
 
-},
-
-    
+},    
      
 getClickedSquareData() {
       return this.clickedSquareData;
@@ -164,15 +204,14 @@ drawOutline(x, y, width, height) {
         paintCtx.clearRect(0, 0, this.paintCanvas.width, this.paintCanvas.height);
       }      
 
-      if (Paint.paintBlock) {
+      // if (Paint.paintBlock) {
       //NOT PAINTING
       paintCtx.strokeStyle = 'lime';
-      } else {
-      paintCtx.strokeStyle = Paint.selectedColor;}      
+      // } else {
+      // paintCtx.strokeStyle = Paint.selectedColor;}      
       paintCtx.lineWidth = 6;
       paintCtx.strokeRect(x, y, width, height);
-
-      
+     
 },
 
 

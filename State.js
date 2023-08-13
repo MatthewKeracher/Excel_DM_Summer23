@@ -16,7 +16,7 @@ const State = {
       }));
       return columns;
     });
-    console.log('generateMap() returned this:', rows)
+    //console.log('generateMap() returned this:', rows)
     return rows;
   },
 

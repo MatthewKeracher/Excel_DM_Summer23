@@ -11,6 +11,7 @@ class Toolbar {
   this.handleFileUpload = this.handleFileUpload.bind(this); // Bind the method to the class instance
   }
 
+  //Initialises other modules. Is the root module.
   init() {
 
     const addButton = document.getElementById('addButton');
@@ -24,6 +25,9 @@ class Toolbar {
 
     const loadButton = document.getElementById('loadButton');
     loadButton.addEventListener('click', this.handleLoadButtonClick);
+
+    const moveButton = document.getElementById('moveButton');
+    moveButton.addEventListener('click', this.handleMoveButtonClick);
 
     const paintButton = document.getElementById('paintButton');
     paintButton.addEventListener('click', this.handlePaintButtonClick);
@@ -61,6 +65,11 @@ class Toolbar {
           case 'L':
             this.handleLoadButtonClick();
             break;
+            
+          case 'm':
+            case 'M':
+              this.handleMoveButtonClick();
+              break;
     
           case 'p':
           case 'P':
@@ -103,8 +112,13 @@ class Toolbar {
     
     State.init(); // Start listening for JSON data changes. 
 
+    
+    //console.log('Canvas Click Event listener made.')
+    Paint.paintCanvas.addEventListener('click', Paint.handleCanvasClick.bind(Paint)); // Bind the context here       
+      
+
     // Add the new event listener for the form submit event
-    editForm.form.addEventListener('submit', Paint.handleSubmit.bind(this));
+    editForm.form.addEventListener('submit', Paint.handleSubmit.bind(Paint)); // this
   
   }
 
@@ -155,19 +169,21 @@ class Toolbar {
       clickSound.currentTime = 1.5; // Rewind the sound to the beginning
       clickSound.play(); // Play the sound
 
+      // //If moveMode is on, turn it off!
+      // if (Paint.moveMode === true) {
+      // document.querySelector('#moveButton').click();
+      // }
+
     let painter = document.getElementById('painter');
-    
 
-    //let editForm = document.getElementById('editForm')
-
-  
+    console.log("isFirstClick: " + Paint.isFirstClick)
+     
     if (painter.style.display === 'none') {
       //PAINTING 
       paintButton.classList.add('paint-button');
       painter.style.display = 'grid'; 
-      // editForm.form.style.display = 'block';
-
-      
+      // editForm.form.style.display = 'block'; 
+      //Paint.isFirstClick = true;     
     
     }else{ 
     
@@ -177,10 +193,8 @@ class Toolbar {
       Paint.isFirstClick = true;
       paintButton.classList.remove('paint-button');
       painter.style.display = 'none';
-      // editForm.form.style.display = 'none';
-    }}
-
-    
+ 
+    }}  
 
 
   }       
@@ -243,6 +257,32 @@ class Toolbar {
     input.addEventListener('change', this.handleFileUpload);
     input.click();
     
+  }
+
+  handleMoveButtonClick() {
+    
+    //If Painter is on, turn it off!
+    if (document.getElementById('painter').style.display === 'grid') {
+    document.querySelector('#paintButton').click();
+    }
+    
+    if (Paint.moveMode === true) {
+       
+      moveButton.classList.remove('paint-button');
+      Paint.moveMode = false;
+      //Paint.isFirstClick = false;
+      
+    }else{ if (Paint.moveMode === false)  {
+
+      moveButton.classList.add('paint-button');
+      Paint.moveMode = true; 
+      Paint.isFirstClick = true;    
+      
+
+    }}      
+       
+    console.log("Paint button clicked and firstClick is " + Paint.isFirstClick)
+
   }
   
   handleFileUpload = (event) => {

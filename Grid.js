@@ -1,6 +1,7 @@
 import Paint from './Paint.js';
 import State from './State.js';
 
+
 const Grid = {
   squareSize: 50, // Initial square size
     
@@ -31,9 +32,7 @@ const Grid = {
       } else {
       console.error("Canvas not found");
     }
-  },
-
-      
+  },      
 
   renderGrid(data) {
     const gridCanvas = document.getElementById('gridCanvas');
@@ -149,6 +148,31 @@ const Grid = {
   getCurrentData() {
     return State.mapArray;
   },
+
+  moveSquare(oldRow, oldCol, newRow, newCol) {
+   
+    // Ensure new position is within the valid range
+    if (newRow >= 0 && newRow <  State.mapArray.length &&
+        newCol >= 0 && newCol <  State.mapArray[0].length) {
+
+      const squareToMove =  State.mapArray[oldRow][oldCol];
+      console.log(squareToMove)
+      const squareAtNewPos = State.mapArray[newRow][newCol];
+      console.log('Moving to ... ' + newRow + ',' + newCol)
+
+      // Swap data between squares
+      State.mapArray[oldRow][oldCol] = squareAtNewPos;
+      State.mapArray[newRow][newCol] = squareToMove;
+
+      // Re-render the grid
+      this.renderGrid(State.mapArray);
+
+      Paint.isFirstClick = true;
+      
+    }
+  }
+
+
 };
 
 export default Grid;
