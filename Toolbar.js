@@ -128,11 +128,13 @@ class Toolbar {
         clickSound.currentTime = 1.5; // Rewind the sound to the beginning
         clickSound.play(); // Play the sound
         
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
-      
-
-      const gridSizeInput = prompt("Enter the grid size (width, height):", "10,10");
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight; 
+    
+    const fullWidth = Math.floor(screenWidth / Grid.squareSize);
+    const fullHeight = Math.floor(screenHeight / Grid.squareSize);
+    
+      const gridSizeInput = prompt("Enter the grid size (width, height):", fullWidth + "," + fullHeight);
       const gridSizeArray = gridSizeInput.split(',').map(Number);
 
       const mapWidth =  gridSizeArray[0] || 10; // Set default value to 10 if not provided

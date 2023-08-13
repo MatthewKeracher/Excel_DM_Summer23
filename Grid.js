@@ -40,15 +40,15 @@ const Grid = {
 
     if (gridCanvas) {
       const ctx = gridCanvas.getContext('2d');
-      //console.log(data.length + ' entries long. ')
-      const gridSize = data.length; // Fixed by Master Array structure
+     
       const squareSize = this.squareSize; // Relative to Zooming in and out
 
-      const canvasWidth =  gridSize * squareSize;
-      const canvasHeight = gridSize * squareSize;
+      const canvasWidth =  data.length * squareSize;
+      const canvasHeight = data[0].length * squareSize;
 
       gridCanvas.width =  canvasWidth ;
       gridCanvas.height = canvasHeight ;
+
       //console.log(data)
 
       data.forEach((col, x) => {
@@ -79,12 +79,15 @@ const Grid = {
     this.updatePaintCanvas();
   },
 
-  updatePaintCanvasSize(gridSize) {
+  updatePaintCanvasSize() {
     const paintCanvas = document.getElementById('paintCanvas');
     if (paintCanvas) {
-      const squareSize = this.squareSize;
-      const canvasWidth = gridSize * squareSize;
-      const canvasHeight = gridSize * squareSize;
+
+      const squareSize = this.squareSize; // Relative to Zooming in and out
+
+      const canvasWidth =  State.mapArray.length * squareSize;
+      const canvasHeight = State.mapArray[0].length * squareSize;
+
       paintCanvas.width = canvasWidth;
       paintCanvas.height = canvasHeight;
       
@@ -99,6 +102,7 @@ const Grid = {
     const paintCanvas = document.getElementById('paintCanvas');
     
     if (paintCanvas) {
+
       paintCanvas.width = this.canvas.width;
       paintCanvas.height = this.canvas.height;
    

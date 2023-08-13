@@ -1,13 +1,14 @@
 import Grid from './Grid.js';
 
+
 const State = {
   mapArray: [],
 
   // Returns an array of columns and rows from which the map is generated. 
-  generateMap(numEntries, gridSize) {
+  generateMap(genWidth, genHeight) {
 
-    const rows = Array.from({ length: numEntries }, (_, x) => {
-      const columns = Array.from({ length: numEntries }, (_, y) => ({
+    const rows = Array.from({ length: genWidth }, (_, x) => {
+      const columns = Array.from({ length: genHeight }, (_, y) => ({
         name: '',
         fill: '#2596be',
         text: ''
@@ -51,8 +52,15 @@ const State = {
   },
 
   init() {
+
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight; 
+    
+    const fullWidth = Math.floor(screenWidth / Grid.squareSize);
+    const fullHeight = Math.floor(screenHeight / Grid.squareSize);
+
     //console.log('State.init()')
-    this.mapArray = this.generateMap(10, 10); // Default 10x10 grid
+    this.mapArray = this.generateMap(fullWidth,fullHeight); 
     Grid.init(this.mapArray);
     
     
