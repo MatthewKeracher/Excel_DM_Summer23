@@ -60,13 +60,50 @@ const Grid = {
           ctx.lineWidth = squareSize/20;
           ctx.strokeRect(x*squareSize, y*squareSize, squareSize, squareSize);
   
-          if (squareSize > 63) { // Only render text if squareSize is larger than 20
+          // if (squareSize > 63) { // Only render text if squareSize is larger than 20
+          //   ctx.fillStyle = 'white';
+          //   ctx.font = 'Bold ' + squareSize/5 + 'px Arial';
+          //   ctx.textAlign = 'center';
+          //   ctx.textBaseline = 'middle';
+          //   ctx.fillText(data[x][y].name, (x* squareSize) + (squareSize / 2), (y* squareSize) + (squareSize / 2));
+          // }
+
+          if (squareSize > 63) {
+            const maxTextWidth = squareSize * 0.9; // Allow 90% of the square width for text
+            const lineHeight = squareSize / 5; // Adjust the line height as needed
+            
+            const words = data[x][y].name.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+            
+            for (let i = 1; i < words.length; i++) {
+              const testLine = currentLine + ' ' + words[i];
+              const testWidth = ctx.measureText(testLine).width;
+              
+              if (testWidth <= maxTextWidth) {
+                currentLine = testLine;
+              } else {
+                lines.push(currentLine);
+                currentLine = words[i];
+              }
+            }
+            
+            lines.push(currentLine); // Add the last line
+            
             ctx.fillStyle = 'white';
-            ctx.font = 'Bold ' + squareSize/5 + 'px Arial';
+            ctx.font = 'Bold ' + lineHeight + 'px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(data[x][y].name, (x* squareSize) + (squareSize / 2), (y* squareSize) + (squareSize / 2));
+            
+            // Render wrapped text lines
+            for (let i = 0; i < lines.length; i++) {
+              const lineY = (y * squareSize) + (squareSize / 2) - (lineHeight * (lines.length - 1) / 2) + (lineHeight * i);
+              ctx.fillText(lines[i], (x * squareSize) + (squareSize / 2), lineY);
+            }
           }
+         
+
+
         })
 
       })

@@ -54,7 +54,7 @@ const Paint = {
     isFirstClick: true, // Flag to track the first click
     paintCanvas: null,
     gridData: null,
-    selectedColor: '',
+    selectedColor: State.defaultFill,
 
     togglePaintMode() {
       this.paintBlock = !this.paintBlock;

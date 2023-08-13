@@ -3,6 +3,7 @@ import Grid from './Grid.js';
 
 const State = {
   mapArray: [],
+  defaultFill: '#2596be',
 
   // Returns an array of columns and rows from which the map is generated. 
   generateMap(genWidth, genHeight) {
@@ -10,7 +11,7 @@ const State = {
     const rows = Array.from({ length: genWidth }, (_, x) => {
       const columns = Array.from({ length: genHeight }, (_, y) => ({
         name: '',
-        fill: '#2596be',
+        fill: this.defaultFill,
         text: ''
       }));
       return columns;
@@ -65,6 +66,8 @@ const State = {
     
     
   },
+
+  
 
 };
 export default State;
