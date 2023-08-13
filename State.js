@@ -61,7 +61,7 @@ const State = {
     const fullHeight = Math.floor(screenHeight / Grid.squareSize);
 
     //console.log('State.init()')
-    this.mapArray = this.generateMap(1,1); //fullWidth,fullHeight); 
+    this.mapArray = this.generateMap(fullWidth,fullHeight); 
     Grid.init(this.mapArray);
     
     

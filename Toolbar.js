@@ -97,6 +97,8 @@ class Toolbar {
             break;
         }
       }
+
+
     });
     
     State.init(); // Start listening for JSON data changes. 
@@ -104,6 +106,19 @@ class Toolbar {
     // Add the new event listener for the form submit event
     editForm.form.addEventListener('submit', Paint.handleSubmit.bind(this));
   
+  }
+
+  adjustCanvasPosition() {
+    const canvasContainer = document.querySelector('.canvas-container');
+    const canvas = document.querySelector('.canvas');
+  
+    const canvasRect = canvas.getBoundingClientRect();
+    const containerRect = canvasContainer.getBoundingClientRect();
+  
+    const xOffset = (canvasRect.width - containerRect.width) / 2;
+    const yOffset = (canvasRect.height - containerRect.height) / 2;
+  
+    canvasContainer.scrollTo(xOffset, yOffset);
   }
 
   handleFillButtonClick() {
@@ -134,9 +149,6 @@ class Toolbar {
     Grid.renderGrid(State.mapArray);
   }
   
-  
-  
-
   handlePaintButtonClick() {
 
       const clickSound = document.getElementById('clickSound');        
@@ -257,16 +269,11 @@ class Toolbar {
       }
       reader.readAsText(file);
     }
-  }
-  
+  }  
 
   handleAddButtonClick() {
-
-
   State.addtoMap()
-
   }
-
 
 };
 
