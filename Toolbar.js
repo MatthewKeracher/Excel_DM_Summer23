@@ -18,6 +18,9 @@ class Toolbar {
     imageButton.addEventListener('click', this.handleImageButtonClick); 
           
     let currentImageScale = 1;
+    
+    const gridButton = document.getElementById('gridButton');
+    gridButton.addEventListener('click', this.handleGridButtonClick);
 
     const addButton = document.getElementById('addButton');
     addButton.addEventListener('click', this.handleAddButtonClick);  
@@ -49,11 +52,21 @@ class Toolbar {
         clickSound.currentTime = 1.5; // Rewind the sound to the beginning
         clickSound.play(); // Play the sound
 
+        // console.log(
+        //   'gridMode: ' + Grid.gridMode +
+        //   '; imageMode: ' + Paint.imageMode 
+        //           )
+
         switch (event.key) {
 
-          case 'b':
-          case 'B':
+          case 'i':
+          case 'I':
             this.handleImageButtonClick();
+            break;
+
+          case 'g':
+          case 'G':
+            this.handleGridButtonClick();
             break;
 
           case 'a':
@@ -92,47 +105,42 @@ class Toolbar {
             break;
 
           
-          case '-':
-              // Zoom out
-
+            case '-':
               if (Paint.imageMode) {
-          
-                const zoomIncrement = 0.1; 
-               
+                const zoomIncrement = 0.1;                 
                 currentImageScale -= zoomIncrement;
                 imageCanvas.style.backgroundSize = `${100 * currentImageScale}%`;
-                
-              }else{
-
-              Grid.squareSize -= 3;
-              Grid.renderGrid(State.mapArray);
-              Grid.updateCanvasSize(State.mapArray.length);}           
-
+              } else if (Grid.gridMode) {
+                // Handle grid zoom out (if needed)
+                // ...
+              } else {
+                // Handle canvas zoom out
+                Grid.squareSize -= 3;
+                Grid.renderGrid(State.mapArray);
+                Grid.updateCanvasSize(State.mapArray.length);
+              }
               break;
-
-          case '=':
-             //Zoom in
-         
-             if (Paint.imageMode) {  
           
-              const zoomIncrement = 0.1; 
+            case '=':
+              if (Paint.imageMode) {  
+                const zoomIncrement = 0.1; 
+                currentImageScale += zoomIncrement;
+                imageCanvas.style.backgroundSize = `${100 * currentImageScale}%`;
+              } else if (Grid.gridMode) {
+                // Handle grid zoom in (if needed)
+                // ...
+              } else {
+                // Handle canvas zoom in
+                Grid.squareSize += 3;
+                Grid.renderGrid(State.mapArray);
+                Grid.updateCanvasSize(State.mapArray.length);
+              }
 
-              currentImageScale += zoomIncrement;
-              imageCanvas.style.backgroundSize = `${100 * currentImageScale}%`;
+          break;   
 
-             }else{
-
-              Grid.squareSize += 3;
-              Grid.renderGrid(State.mapArray);
-              Grid.updateCanvasSize(State.mapArray.length);}
-
-              break;  
-              
-              //Arrow Keys
-           
-            default:
-            // Handle other key presses if necessary
-            break;
+          default:
+          
+          break;
         }
       }
 
@@ -155,38 +163,57 @@ class Toolbar {
   handleImageButtonClick() {
     
 
-     //If Painter is on, turn it off!
-     if (document.getElementById('painter').style.display === 'grid') {
-      document.querySelector('#paintButton').click();
-      }
-      
-      if (Paint.imageMode === true) {
-         
-        imageButton.classList.remove('paint-button');
-        Paint.imageMode = false;
-      
-        
-      }else{ if (Paint.imageMode === false)  {
-  
-        imageButton.classList.add('paint-button');
-        Paint.imageMode = true; 
+    //If Painter is on, turn it off!
+    if (document.getElementById('painter').style.display === 'grid') {
+    document.querySelector('#paintButton').click();
+    }
 
-        const imageUrl = prompt("Enter the URL of the image:");
-
-      if (imageUrl) {
-      const imageCanvas = document.getElementById('imageCanvas');
-      imageCanvas.style.backgroundImage = `url(${imageUrl})`;
-      imageCanvas.style.backgroundRepeat = 'no-repeat';
-      }
-       
-      }
+    //If Grid is on, turn it off!
+    if (Grid.gridMode) {
+    document.querySelector('#gridButton').click();
+    }
+      
+    if (Paint.imageMode) {
+      imageButton.classList.remove('paint-button');
+      Paint.imageMode = false;
+      
+    } else {
+      imageButton.classList.add('paint-button');
+      Paint.imageMode = true; 
+      
+    }
     
-      //console.log(Paint.imageMode)
+    
     
     }  
-  
+
+
+  handleGridButtonClick() {
     
-  }
+
+    //If Painter is on, turn it off!
+    if (document.getElementById('painter').style.display === 'grid') {
+     document.querySelector('#paintButton').click();
+     }
+
+    //If Image is on, turn it off!
+    if (Paint.imageMode) {
+      document.querySelector('#imageButton').click();
+    }
+     
+    if (Grid.gridMode === true) {
+      gridButton.classList.remove('paint-button');
+      Grid.gridMode = false; // Use = for assignment instead of ===
+   } else {
+      gridButton.classList.add('paint-button');
+      Grid.gridMode = true; 
+   }
+   
+ 
+       
+   
+   }  
+ 
 
   handleFillButtonClick() {
     // Ask for confirmation before performing the fill operation
@@ -247,74 +274,88 @@ class Toolbar {
       paintButton.classList.remove('paint-button');
       painter.style.display = 'none';
  
-    }}  
+    }
+  
+
+  }  
 
 
-  }       
+  }     
+  
+  
 
   handleNewButtonClick() {     
 
     const clickSound = document.getElementById('clickSound');        
         clickSound.currentTime = 1.5; // Rewind the sound to the beginning
         clickSound.play(); // Play the sound
-        
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight; 
-    
-    const fullWidth = Math.floor(screenWidth / Grid.squareSize);
-    const fullHeight = Math.floor(screenHeight / Grid.squareSize);
-    
-    const gridSizeInput = prompt("Enter the grid size (width, height):", fullWidth + "," + fullHeight);
-    const gridSizeArray = gridSizeInput.split(',').map(Number);
+     
+        const imageUrl = prompt("Enter the URL of the image:");
+        if (imageUrl) {
+        Grid.genImage(imageUrl);
+        }
 
-    const mapWidth =  gridSizeArray[0] || 10; // Set default value to 10 if not provided
-    const mapHeight = gridSizeArray[1] || 10; // Set default value to 10 if not provided
+    }
+    
 
-            
-      if (!isNaN(mapWidth) && mapWidth > 0) {
-        
-        State.mapArray = State.generateMap(mapWidth, mapHeight);
-        Grid.init(State.mapArray);
-        const projectTitle = document.getElementById('projectTitle');
-        projectTitle.textContent = 'Untitled';
-      } else {
-        alert("Invalid input. Please enter a valid grid size.");
+    handleLoadButtonClick = () => {
+      if (document.getElementById('painter').style.display === 'grid') {
+        document.querySelector('#paintButton').click();
       }
-  }
-   
+    
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'application/json';
+      input.addEventListener('change', this.handleFileUpload);
+      input.click();
+    }
+  
+    handleFileUpload = (event) => {
+      console.log('File loading...');
+      const file = event.target.files[0];
+      if (file) {
+        console.log('File selected:', file.name);
+    
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            console.log('File contents loaded:', event.target.result);
+            const jsonData = JSON.parse(event.target.result);
+            Grid.init(jsonData);
+            State.mapArray = jsonData;
+    
+            const projectTitle = document.getElementById('projectTitle');
+            projectTitle.textContent = file.name || 'Untitled';
+            console.log('Project title updated:', projectTitle.textContent);
+    
+            if (jsonData[0][0]) {
+              Grid.genImage(jsonData[0][0].image, jsonData[0][0].width, jsonData[0][0].height);
+            }
+          } catch (error) {
+            alert("Error reading JSON file.");
+            console.error('Error reading JSON:', error);
+          }
+        };
+        reader.readAsText(file);
+      }
+    }
+
   handleSaveButtonClick() {
 
     const clickSound = document.getElementById('clickSound');        
         clickSound.currentTime = 1.5; // Rewind the sound to the beginning
         clickSound.play(); // Play the sound
 
-    const currentData = Grid.getCurrentData();
+    const currentData = State.mapArray;
     if (currentData) {
-      State.exportJSONData(currentData);
-      
+      State.exportJSONData(currentData);      
     } else {
       alert("No data to export.");
     }
   }
 
-  handleLoadButtonClick = () => {
-
-    //If Painter is on, turn it off!
-    if (document.getElementById('painter').style.display === 'grid') {
-      document.querySelector('#paintButton').click();
-      }
-
-    const clickSound = document.getElementById('clickSound');        
-        clickSound.currentTime = 1.5; // Rewind the sound to the beginning
-        clickSound.play(); // Play the sound
-
-    console.log(this); // Debugging line    
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'application/json';
-    input.addEventListener('change', this.handleFileUpload);
-    input.click();
-    
+  handleAddButtonClick() {
+  State.addtoMap()
   }
 
   handleMoveButtonClick() {
@@ -341,36 +382,6 @@ class Toolbar {
        
     console.log("Paint button clicked and firstClick is " + Paint.isFirstClick)
 
-  }
-  
-  handleFileUpload = (event) => {
-    console.log('File loading...'); // Add this line
-    const file = event.target.files[0];
-    if (file) {
-      console.log('File selected:', file.name);
-  
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        try {
-          console.log('File contents loaded:', event.target.result);
-          const jsonData = JSON.parse(event.target.result);
-          Grid.init(jsonData); // Replace the grid data with loaded data
-          State.mapArray = jsonData;
-          // Update project title with loaded file name or "Untitled"
-          const projectTitle = document.getElementById('projectTitle');
-          projectTitle.textContent = file.name || 'Untitled';
-          console.log('Project title updated:', projectTitle.textContent);
-        } catch (error) {
-          alert("Error reading JSON file.");
-          console.error('Error reading JSON:', error);
-        }
-      }
-      reader.readAsText(file);
-    }
-  }  
-
-  handleAddButtonClick() {
-  State.addtoMap()
   }
 
 };

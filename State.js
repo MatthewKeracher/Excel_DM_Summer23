@@ -12,8 +12,9 @@ const State = {
       const columns = Array.from({ length: genHeight }, (_, y) => ({
         name: '',
         fill: this.defaultFill,
-        text: ''
-      }));
+        text: '',
+        image:'',
+        }));
       return columns;
     });
     //console.log('generateMap() returned this:', rows)

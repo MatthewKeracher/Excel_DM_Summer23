@@ -3,6 +3,7 @@ import State from './State.js';
 
 
 const Grid = {
+  gridMode: false,
   squareSize: 25, // Initial square size
     
   canvas: null,
@@ -28,11 +29,42 @@ const Grid = {
     // Initialize Paint module with gridData       
       Paint.init(data);
       this.updateCanvasSize(Math.ceil(Math.sqrt(this.data.length))); 
-   
+         
       } else {
       console.error("Canvas not found");
     }
-  },      
+  },
+  
+  genImage(imageUrl, width, height) {
+    const image = new Image();
+    const imageCanvas = document.getElementById('imageCanvas');
+    imageCanvas.style.backgroundImage = `url(${imageUrl})`;
+    imageCanvas.style.backgroundRepeat = 'no-repeat';
+  
+    image.onload = () => {
+      const imageWidth = Math.floor(image.width / Grid.squareSize);
+      const imageHeight = Math.floor(image.height / Grid.squareSize);
+  
+      
+  
+      const mapWidth = width || imageWidth;
+      const mapHeight = height || imageHeight;
+  
+      if (!isNaN(mapWidth) && mapWidth > 0) {
+        State.mapArray = State.generateMap(mapWidth, mapHeight);
+        Grid.init(State.mapArray);
+        const projectTitle = document.getElementById('projectTitle');
+        projectTitle.textContent = 'Untitled';
+      } else {
+        alert("Invalid input. Please enter a valid grid size.");
+      }
+
+      State.mapArray[0][0].image = imageUrl;
+
+    };
+  
+    image.src = imageUrl;
+  },
 
   renderGrid(data) {
     const gridCanvas = document.getElementById('gridCanvas');
@@ -137,14 +169,15 @@ const Grid = {
 
   updateCanvasSize() {
     const canvasesToUpdate = ['paintCanvas', 'imageCanvas'];
-
+  
+    
   canvasesToUpdate.forEach(canvasId => {
     const canvas = document.getElementById(canvasId);
 
     if (canvas) {
       const squareSize = this.squareSize; // Relative to Zooming in and out
       const canvasWidth = State.mapArray.length * squareSize;
-      const canvasHeight = State.mapArray[0].length * squareSize;
+      const canvasHeight = State.mapArray[0].length * squareSize;      
 
       canvas.width = canvasWidth;
       canvas.height = canvasHeight;
@@ -155,9 +188,6 @@ const Grid = {
   
   this.updateCanvas(); // Update other properties/styles for paintCanvas
 },
-
-
-
   
   updateCanvas() {
     const paintCanvas = document.getElementById('paintCanvas');

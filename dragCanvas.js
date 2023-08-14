@@ -3,10 +3,12 @@ const canvasContainer = document.querySelector('.canvas-container');
 const imageCanvas = document.getElementById('imageCanvas');
 let isDragging = false;
 let isImageDragging = false;
-let startX = 0;
-let startY = 0;
+let startX = 0 //Paint.Square.x;
+let startY = 0 //Paint.Square.y;
 let startImageX = 0;
 let startImageY = 0;
+
+
 
 canvasContainer.addEventListener('mousedown', (e) => {
   if (!Paint.imageMode) {

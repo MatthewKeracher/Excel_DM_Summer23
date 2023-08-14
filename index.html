@@ -16,14 +16,15 @@
 </div>
 
     <div class = toolbar id="toolbar">
-    <button class = button id="imageButton">[B]ack</button>
-    <button class = button id="addButton">[A]dd</button>
+    <button class = button id="imageButton">[I]mage</button>
+    <button class = button id="gridButton" style="display: none;">[G]rid</button>
+    <button class = button id="addButton" style="display: none;">[A]dd</button>
     <button class = button id="newButton">[N]ew</button>
     <button class = button id="saveButton">[S]ave</button>
     <button class = button id="loadButton">[L]oad</button>
     <button class = button id="moveButton">[M]ove</button>
     <button class = button id="paintButton">[P]aint</button>
-    <button class = button id="fillButton">[F]ill</button>
+    <button class = button id="fillButton" style="display: none;">[F]ill</button>
     </div>
 
 </header>
@@ -68,19 +69,18 @@
         <div class="color" data-color="#f0e68c" style="background-color: khaki;"></div>
         
     </div >  
-     
-    <div class="main-content">    
+        
         
     <div class="canvas-container">  
           
     
     <canvas id="gridCanvas"  class="canvas" style="opacity: 0.5"></canvas>
     <canvas id="paintCanvas" class="canvas"></canvas>   
-    <canvas id="imageCanvas"></canvas>  
+    <canvas id="imageCanvas" ></canvas>  
 
     </div>
 
-    </div>
+   
         
     </main>
     <footer>
