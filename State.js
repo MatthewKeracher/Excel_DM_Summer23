@@ -21,6 +21,7 @@ const State = {
     return rows;
   },
 
+
   // Placeholder that returns a random colour to be entered against fill above. 
   getRandomColor() {
     const colors = ['red', 'pink', 'green', 'cyan', 'orange', 'purple'];
@@ -100,7 +101,38 @@ const State = {
     }
     
     Grid.renderGrid(State.mapArray);
-  }
+  },
+
+  genImage(imageUrl, width, height) {
+    const image = new Image();
+    const imageCanvas = document.getElementById('imageCanvas');
+    imageCanvas.style.backgroundImage = `url(${imageUrl})`;
+    imageCanvas.style.backgroundRepeat = 'no-repeat';
+  
+    image.onload = () => {
+      const imageWidth = Math.floor(image.width / Grid.squareSize);
+      const imageHeight = Math.floor(image.height / Grid.squareSize);
+        
+      const mapWidth = width || imageWidth;
+      const mapHeight = height || imageHeight;
+  
+      if (!isNaN(mapWidth) && mapWidth > 0) {
+        State.mapArray = State.generateMap(mapWidth, mapHeight);
+        Grid.init(State.mapArray);
+        const projectTitle = document.getElementById('projectTitle');
+        projectTitle.textContent = 'Untitled';
+      } else {
+        alert("Invalid input. Please enter a valid grid size.");
+      }
+
+      State.mapArray[0][0].image = imageUrl;
+      
+
+    };
+  
+    image.src = imageUrl;
+  },
+
   
   
   

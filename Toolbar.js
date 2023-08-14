@@ -292,8 +292,10 @@ class Toolbar {
      
         const imageUrl = prompt("Enter the URL of the image:");
         if (imageUrl) {
-        Grid.genImage(imageUrl);
+        State.genImage(imageUrl);
         }
+
+       
 
     }
     
@@ -319,17 +321,17 @@ class Toolbar {
         const reader = new FileReader();
         reader.onload = (event) => {
           try {
-            console.log('File contents loaded:', event.target.result);
+            //console.log('File contents loaded:', event.target.result);
             const jsonData = JSON.parse(event.target.result);
             Grid.init(jsonData);
             State.mapArray = jsonData;
-    
+            console.log(State.mapArray[0])
             const projectTitle = document.getElementById('projectTitle');
             projectTitle.textContent = file.name || 'Untitled';
             console.log('Project title updated:', projectTitle.textContent);
     
             if (jsonData[0][0]) {
-              Grid.genImage(jsonData[0][0].image, jsonData[0][0].width, jsonData[0][0].height);
+              State.genImage(jsonData[0][0].image, jsonData.length, jsonData[0].length);
             }
           } catch (error) {
             alert("Error reading JSON file.");
@@ -348,7 +350,8 @@ class Toolbar {
 
     const currentData = State.mapArray;
     if (currentData) {
-      State.exportJSONData(currentData);      
+      State.exportJSONData(currentData); 
+      console.log(currentData[0])     
     } else {
       alert("No data to export.");
     }

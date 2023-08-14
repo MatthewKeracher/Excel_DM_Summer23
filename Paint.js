@@ -10,7 +10,8 @@ const editForm = {
   x: document.getElementById('form-x'),
   y: document.getElementById("form-y"), 
   name: document.getElementById("form-name"), 
-  fill: document.getElementById("form-fill")
+  fill: document.getElementById("form-fill"),
+  image:document.getElementById("form-image")
 }
 
 export { editForm };
@@ -75,10 +76,31 @@ const Paint = {
   
     init(gridData) {
       this.paintCanvas = document.getElementById('paintCanvas');
-      this.gridData = gridData;      
-       
-
+      this.gridData = gridData;   
+      
+      
+      this.paintCanvas.addEventListener('dblclick', this.handleCanvasDoubleClick.bind(this));
+        
     
+    },
+
+    handleCanvasDoubleClick(event) {
+      const rect = this.paintCanvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+    
+      // Calculate the row and column based on the click position
+      const gridSize = this.gridData.length;
+      const squareSize = this.paintCanvas.width / gridSize;
+      const col = Math.floor(mouseX / squareSize);
+      const row = Math.floor(mouseY / squareSize);
+    
+      // Update the fill of the selected square to transparent
+      this.Square = State.mapArray[col][row];
+      this.Square.fill = 'transparent';
+    
+      // Redraw the grid to apply the changes
+      Grid.renderGrid(State.mapArray);
     },
 
       
@@ -158,6 +180,7 @@ const Paint = {
             editForm.y.value = row;
             textbox.value = this.Square.text
             namebox.value = this.Square.name
+            editForm.image.value = this.Square.image
            
             // Check if paint mode is ACTIVE.
             if (!this.paintBlock) {             
@@ -186,7 +209,8 @@ const y = editForm.y.value; // Get the y value from the form
 
     name: namebox.value,
     fill: editForm.fill.value,
-    text: textbox.value,}    
+    text: textbox.value,
+    image: editForm.image.value}    
 
 Grid.renderGrid(State.mapArray)
 

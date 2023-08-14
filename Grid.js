@@ -4,7 +4,7 @@ import State from './State.js';
 
 const Grid = {
   gridMode: false,
-  squareSize: 25, // Initial square size
+  squareSize: 40, // Initial square size
     
   canvas: null,
 
@@ -23,8 +23,9 @@ const Grid = {
      
 
     // Add keydown event listener for zooming
+   
       //document.addEventListener('keydown', this.handleKeyDown.bind(this));
-      this.renderGrid(data);
+    this.renderGrid(data);
 
     // Initialize Paint module with gridData       
       Paint.init(data);
@@ -35,38 +36,9 @@ const Grid = {
     }
   },
   
-  genImage(imageUrl, width, height) {
-    const image = new Image();
-    const imageCanvas = document.getElementById('imageCanvas');
-    imageCanvas.style.backgroundImage = `url(${imageUrl})`;
-    imageCanvas.style.backgroundRepeat = 'no-repeat';
   
-    image.onload = () => {
-      const imageWidth = Math.floor(image.width / Grid.squareSize);
-      const imageHeight = Math.floor(image.height / Grid.squareSize);
-  
-      
-  
-      const mapWidth = width || imageWidth;
-      const mapHeight = height || imageHeight;
-  
-      if (!isNaN(mapWidth) && mapWidth > 0) {
-        State.mapArray = State.generateMap(mapWidth, mapHeight);
-        Grid.init(State.mapArray);
-        const projectTitle = document.getElementById('projectTitle');
-        projectTitle.textContent = 'Untitled';
-      } else {
-        alert("Invalid input. Please enter a valid grid size.");
-      }
-
-      State.mapArray[0][0].image = imageUrl;
-
-    };
-  
-    image.src = imageUrl;
-  },
-
   renderGrid(data) {
+    console.log(data[0][0])
     const gridCanvas = document.getElementById('gridCanvas');
 
     if (gridCanvas) {
