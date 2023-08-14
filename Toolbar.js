@@ -14,6 +14,11 @@ class Toolbar {
   //Initialises other modules. Is the root module.
   init() {
 
+    const imageButton = document.getElementById('imageButton');
+    imageButton.addEventListener('click', this.handleImageButtonClick); 
+          
+    let currentImageScale = 1;
+
     const addButton = document.getElementById('addButton');
     addButton.addEventListener('click', this.handleAddButtonClick);  
 
@@ -45,6 +50,11 @@ class Toolbar {
         clickSound.play(); // Play the sound
 
         switch (event.key) {
+
+          case 'b':
+          case 'B':
+            this.handleImageButtonClick();
+            break;
 
           case 'a':
           case 'A':
@@ -83,20 +93,39 @@ class Toolbar {
 
           
           case '-':
-              //prompt to zoom out
               // Zoom out
+
+              if (Paint.imageMode) {
+          
+                const zoomIncrement = 0.1; 
+               
+                currentImageScale -= zoomIncrement;
+                imageCanvas.style.backgroundSize = `${100 * currentImageScale}%`;
+                
+              }else{
+
               Grid.squareSize -= 3;
               Grid.renderGrid(State.mapArray);
-              Grid.updatePaintCanvasSize(State.mapArray.length);
-              Grid.updatePaintCanvas();
+              Grid.updateCanvasSize(State.mapArray.length);}           
+
               break;
 
           case '=':
-              // Zoom in
+             //Zoom in
+         
+             if (Paint.imageMode) {  
+          
+              const zoomIncrement = 0.1; 
+
+              currentImageScale += zoomIncrement;
+              imageCanvas.style.backgroundSize = `${100 * currentImageScale}%`;
+
+             }else{
+
               Grid.squareSize += 3;
               Grid.renderGrid(State.mapArray);
-              Grid.updatePaintCanvasSize(State.mapArray.length);
-              Grid.updatePaintCanvas();
+              Grid.updateCanvasSize(State.mapArray.length);}
+
               break;  
               
               //Arrow Keys
@@ -122,17 +151,41 @@ class Toolbar {
   
   }
 
-  adjustCanvasPosition() {
-    const canvasContainer = document.querySelector('.canvas-container');
-    const canvas = document.querySelector('.canvas');
+
+  handleImageButtonClick() {
+    
+
+     //If Painter is on, turn it off!
+     if (document.getElementById('painter').style.display === 'grid') {
+      document.querySelector('#paintButton').click();
+      }
+      
+      if (Paint.imageMode === true) {
+         
+        imageButton.classList.remove('paint-button');
+        Paint.imageMode = false;
+      
+        
+      }else{ if (Paint.imageMode === false)  {
   
-    const canvasRect = canvas.getBoundingClientRect();
-    const containerRect = canvasContainer.getBoundingClientRect();
+        imageButton.classList.add('paint-button');
+        Paint.imageMode = true; 
+
+        const imageUrl = prompt("Enter the URL of the image:");
+
+      if (imageUrl) {
+      const imageCanvas = document.getElementById('imageCanvas');
+      imageCanvas.style.backgroundImage = `url(${imageUrl})`;
+      imageCanvas.style.backgroundRepeat = 'no-repeat';
+      }
+       
+      }
+    
+      //console.log(Paint.imageMode)
+    
+    }  
   
-    const xOffset = (canvasRect.width - containerRect.width) / 2;
-    const yOffset = (canvasRect.height - containerRect.height) / 2;
-  
-    canvasContainer.scrollTo(xOffset, yOffset);
+    
   }
 
   handleFillButtonClick() {
@@ -176,7 +229,7 @@ class Toolbar {
 
     let painter = document.getElementById('painter');
 
-    console.log("isFirstClick: " + Paint.isFirstClick)
+    //console.log("isFirstClick: " + Paint.isFirstClick)
      
     if (painter.style.display === 'none') {
       //PAINTING 

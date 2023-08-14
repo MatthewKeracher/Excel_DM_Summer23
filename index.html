@@ -16,6 +16,7 @@
 </div>
 
     <div class = toolbar id="toolbar">
+    <button class = button id="imageButton">[B]ack</button>
     <button class = button id="addButton">[A]dd</button>
     <button class = button id="newButton">[N]ew</button>
     <button class = button id="saveButton">[S]ave</button>
@@ -42,12 +43,7 @@
     <button type="submit">Save</button>
 
 </form> 
-
-   
-
-</div>
-
-                     
+</div>                     
 
 <div class="color-palette" id = "painter" style="display: none;">  
         <div class="color" data-color="#ffffff" style="background-color: white;"></div>
@@ -57,7 +53,7 @@
         <div class="color" data-color="#00ff00" style="background-color: lime;"></div>
         <div class="color" data-color="#00ffff" style="background-color: cyan;"></div>
         <div class="color" data-color="#008080" style="background-color: teal;"></div>
-        <div class="color" data-color="#0000ff" style="background-color: blue;"></div>
+        <div class="color" data-color="#2596be" style="background-color: #2596be;"></div>
         <div class="color" data-color="#ff00ff" style="background-color: magenta;"></div>
         <div class="color" data-color="#a020f0" style="background-color: purple;"></div>
         <div class="color" data-color="#808080" style="background-color: gray;"></div>
@@ -73,14 +69,17 @@
         
     </div >  
      
-    <div class="main-content">
-
-    <div class="canvas-container">
-  
-    <canvas id="gridCanvas"  class="canvas"></canvas>
-    <canvas id="paintCanvas" class="canvas"></canvas>
+    <div class="main-content">    
+        
+    <div class="canvas-container">  
+          
+    
+    <canvas id="gridCanvas"  class="canvas" style="opacity: 0.5"></canvas>
+    <canvas id="paintCanvas" class="canvas"></canvas>   
+    <canvas id="imageCanvas"></canvas>  
 
     </div>
+
     </div>
         
     </main>
@@ -88,7 +87,7 @@
     <p>&copy; 2023 Excel_DM</p>
     </footer>
 
-    <script src="dragCanvas.js"></script>
+    <script type="module" src="dragCanvas.js"></script>
 
     <script type="module" src="Grid.js"></script>
     <script type="module" src="Toolbar.js"></script>

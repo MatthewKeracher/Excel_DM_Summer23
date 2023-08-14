@@ -52,6 +52,9 @@ const Paint = {
 
     paintBlock: true,
 
+    //imageMode variables.
+    imageMode: false,
+
     //moveMode variables.
     moveMode: false,
     oldRow: 0,
@@ -74,12 +77,7 @@ const Paint = {
       this.paintCanvas = document.getElementById('paintCanvas');
       this.gridData = gridData;      
        
-      // if (this.paintCanvas) {
-      //   console.log('Event listener made.')
-      //   this.paintCanvas.addEventListener('click', this.handleCanvasClick.bind(this)); // Bind the context here       
-      // } else {
-      //   console.error("paintCanvas not found");
-      // }
+
     
     },
 
@@ -99,6 +97,8 @@ const Paint = {
             // Calculate the row and column based on the click position
             const gridSize = this.gridData.length;
             const squareSize = this.paintCanvas.width / gridSize;
+
+
           
             const col = Math.floor(mouseX / squareSize);
             const row = Math.floor(mouseY / squareSize);
@@ -169,8 +169,9 @@ const Paint = {
             }
 
             // Draw outline on the paintCanvas
-            this.drawOutline(col * squareSize, row * squareSize, squareSize, squareSize);   
-              
+            this.drawOutline(col * squareSize, row * squareSize, squareSize, squareSize);  
+            
+                          
             },
   
 

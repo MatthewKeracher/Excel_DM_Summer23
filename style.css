@@ -11,9 +11,9 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   color: lime;
   overflow: hidden;
-  /*background-image: url('https://i.pinimg.com/originals/44/e4/63/44e4636259fc47f65feb95c70e22c925.jpg');
-  background-size: cover;*/
+  
 }
+
 
 .title-container{
   width: 15%;
@@ -151,22 +151,30 @@ button[type="submit"]:hover {
 }
 
 .canvas-container {
-  width: 100vw;
-  height: 100vh;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  border: 1px solid black;
+  position: absolute; 
+  border: 5px solid hotpink;
+  background-color: white;
+  opacity: 1;
  
 }
 
+imageCanvas{
+
+z-index: 2;
+
+}
+
+
 .canvas {
-    
-  z-index: 0;
+  position: absolute;  
   border: 5px solid lime;
-  opacity: 1;
   cursor: grab;
+  z-index: 1;
+  
 }
 
 footer {

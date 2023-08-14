@@ -3,7 +3,7 @@ import Grid from './Grid.js';
 
 const State = {
   mapArray: [],
-  defaultFill: '#2596be',
+  defaultFill: 'transparent',
 
   // Returns an array of columns and rows from which the map is generated. 
   generateMap(genWidth, genHeight) {

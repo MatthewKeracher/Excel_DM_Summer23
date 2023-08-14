@@ -3,7 +3,7 @@ import State from './State.js';
 
 
 const Grid = {
-  squareSize: 50, // Initial square size
+  squareSize: 25, // Initial square size
     
   canvas: null,
 
@@ -27,7 +27,7 @@ const Grid = {
 
     // Initialize Paint module with gridData       
       Paint.init(data);
-      this.updatePaintCanvasSize(Math.ceil(Math.sqrt(this.data.length))); // Update paintCanvas size
+      this.updateCanvasSize(Math.ceil(Math.sqrt(this.data.length))); 
    
       } else {
       console.error("Canvas not found");
@@ -48,26 +48,18 @@ const Grid = {
       gridCanvas.width =  canvasWidth ;
       gridCanvas.height = canvasHeight ;
 
-      //console.log(data)
-
       data.forEach((col, x) => {
         col.forEach((_, y) => {
 
           ctx.fillStyle = data[x][y].fill;
           ctx.fillRect(x*squareSize, y*squareSize, squareSize, squareSize);
-          ctx.strokeStyle = 'black';
+          ctx.strokeStyle = '#2596be';
           ctx.lineWidth = squareSize/20;
           ctx.strokeRect(x*squareSize, y*squareSize, squareSize, squareSize);
   
-          // if (squareSize > 63) { // Only render text if squareSize is larger than 20
-          //   ctx.fillStyle = 'white';
-          //   ctx.font = 'Bold ' + squareSize/5 + 'px Arial';
-          //   ctx.textAlign = 'center';
-          //   ctx.textBaseline = 'middle';
-          //   ctx.fillText(data[x][y].name, (x* squareSize) + (squareSize / 2), (y* squareSize) + (squareSize / 2));
-          // }
-
+          
           if (squareSize > 63) {
+            
             const maxTextWidth = squareSize * 0.9; // Allow 90% of the square width for text
             const lineHeight = squareSize / 5; // Adjust the line height as needed
             
@@ -112,38 +104,9 @@ const Grid = {
       console.error("gridCanvas not found");
     }
     
-    this.updatePaintCanvas();
+    this.updateCanvas();
   },
 
-  updatePaintCanvasSize() {
-    const paintCanvas = document.getElementById('paintCanvas');
-    if (paintCanvas) {
-
-      const squareSize = this.squareSize; // Relative to Zooming in and out
-
-      const canvasWidth =  State.mapArray.length * squareSize;
-      const canvasHeight = State.mapArray[0].length * squareSize;
-
-      paintCanvas.width = canvasWidth;
-      paintCanvas.height = canvasHeight;
-      
-      this.updatePaintCanvas(); // Update other properties/styles for paintCanvas
-    } else {
-      console.error("paintCanvas not found");
-    }
-},
-
-  updatePaintCanvas() {
-
-    const paintCanvas = document.getElementById('paintCanvas');
-    
-    if (paintCanvas) {
-
-      paintCanvas.width = this.canvas.width;
-      paintCanvas.height = this.canvas.height;
-   
-    }
-  },
 
   getCurrentData() {
     return State.mapArray;
@@ -170,7 +133,41 @@ const Grid = {
       Paint.isFirstClick = true;
       
     }
-  }
+  },
+
+  updateCanvasSize() {
+    const canvasesToUpdate = ['paintCanvas', 'imageCanvas'];
+
+  canvasesToUpdate.forEach(canvasId => {
+    const canvas = document.getElementById(canvasId);
+
+    if (canvas) {
+      const squareSize = this.squareSize; // Relative to Zooming in and out
+      const canvasWidth = State.mapArray.length * squareSize;
+      const canvasHeight = State.mapArray[0].length * squareSize;
+
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+    } else {
+      console.error(`${canvasId} not found`);
+    }
+  });
+  
+  this.updateCanvas(); // Update other properties/styles for paintCanvas
+},
+
+
+
+  
+  updateCanvas() {
+    const paintCanvas = document.getElementById('paintCanvas');
+  
+    if (paintCanvas) {
+      paintCanvas.width = this.canvas.width;
+      paintCanvas.height = this.canvas.height;
+    }
+  },
+  
 
 
 };
