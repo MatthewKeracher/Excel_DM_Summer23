@@ -38,7 +38,7 @@ const Grid = {
   
   
   renderGrid(data) {
-    console.log(data[0][0])
+    
     const gridCanvas = document.getElementById('gridCanvas');
 
     if (gridCanvas) {

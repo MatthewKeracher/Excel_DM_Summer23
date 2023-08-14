@@ -159,7 +159,6 @@ class Toolbar {
   
   }
 
-
   handleImageButtonClick() {
     
 
@@ -185,8 +184,7 @@ class Toolbar {
     
     
     
-    }  
-
+  }
 
   handleGridButtonClick() {
     
@@ -213,7 +211,6 @@ class Toolbar {
        
    
    }  
- 
 
   handleFillButtonClick() {
     // Ask for confirmation before performing the fill operation
@@ -280,9 +277,7 @@ class Toolbar {
   }  
 
 
-  }     
-  
-  
+  }   
 
   handleNewButtonClick() {     
 
@@ -292,15 +287,41 @@ class Toolbar {
      
         const imageUrl = prompt("Enter the URL of the image:");
         if (imageUrl) {
-        State.genImage(imageUrl);
-        }
+          const image = new Image();
+          const imageCanvas = document.getElementById('imageCanvas');
+          imageCanvas.style.backgroundImage = `url(${imageUrl})`;
+          imageCanvas.style.backgroundRepeat = 'no-repeat';
+        
+          image.onload = () => {
+            const imageWidth = Math.floor(image.width / Grid.squareSize);
+            const imageHeight = Math.floor(image.height / Grid.squareSize);
+              
+            const mapWidth = imageWidth;
+            const mapHeight = imageHeight;
+        
+            if (!isNaN(mapWidth) && mapWidth > 0) {
+              State.mapArray = State.generateMap(mapWidth, mapHeight);
+              //This is a problem!
+              Grid.init(State.mapArray);
+              const projectTitle = document.getElementById('projectTitle');
+              projectTitle.textContent = 'Untitled';
+            } else {
+              alert("Invalid input. Please enter a valid grid size.");
+            }
+      
+            State.mapArray[0][0].image = imageUrl;
+            
+      
+          };
+        
+          image.src = imageUrl;
+        }    
 
-       
-
-    }
+  }
     
+  handleLoadButtonClick = () => {
 
-    handleLoadButtonClick = () => {
+      //If Painter is showing, hide it!
       if (document.getElementById('painter').style.display === 'grid') {
         document.querySelector('#paintButton').click();
       }
@@ -310,29 +331,45 @@ class Toolbar {
       input.accept = 'application/json';
       input.addEventListener('change', this.handleFileUpload);
       input.click();
-    }
+  }
   
-    handleFileUpload = (event) => {
-      console.log('File loading...');
+  handleFileUpload = (event) => {
       const file = event.target.files[0];
+      
       if (file) {
         console.log('File selected:', file.name);
     
         const reader = new FileReader();
         reader.onload = (event) => {
           try {
-            //console.log('File contents loaded:', event.target.result);
             const jsonData = JSON.parse(event.target.result);
-            Grid.init(jsonData);
+            
             State.mapArray = jsonData;
-            console.log(State.mapArray[0])
+            Grid.init(State.mapArray);
+            
             const projectTitle = document.getElementById('projectTitle');
-            projectTitle.textContent = file.name || 'Untitled';
-            console.log('Project title updated:', projectTitle.textContent);
-    
-            if (jsonData[0][0]) {
-              State.genImage(jsonData[0][0].image, jsonData.length, jsonData[0].length);
-            }
+            projectTitle.textContent = file.name; 
+                          
+            const imageUrl = State.mapArray[0][0].image;
+            console.log(imageUrl)
+            const image = new Image();
+            const imageCanvas = document.getElementById('imageCanvas');
+            imageCanvas.style.backgroundImage = `url(${imageUrl})`;
+            imageCanvas.style.backgroundRepeat = 'no-repeat';
+            
+              image.onload = () => {
+                const imageWidth = Math.floor(image.width / Grid.squareSize);
+                const imageHeight = Math.floor(image.height / Grid.squareSize);
+                  
+                const mapWidth =  imageWidth;
+                const mapHeight = imageHeight;
+            
+                State.mapArray = State.generateMap(mapWidth, mapHeight);              
+          
+              };
+            
+              image.src = imageUrl;            
+            
           } catch (error) {
             alert("Error reading JSON file.");
             console.error('Error reading JSON:', error);
@@ -340,7 +377,7 @@ class Toolbar {
         };
         reader.readAsText(file);
       }
-    }
+  }
 
   handleSaveButtonClick() {
 

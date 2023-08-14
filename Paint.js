@@ -210,7 +210,9 @@ const y = editForm.y.value; // Get the y value from the form
     name: namebox.value,
     fill: editForm.fill.value,
     text: textbox.value,
-    image: editForm.image.value}    
+    image: editForm.image.value}  
+    
+    console.log(State.mapArray[x][y])
 
 Grid.renderGrid(State.mapArray)
 
